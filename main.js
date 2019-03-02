@@ -4,11 +4,14 @@
 function main() {
   let x = new StudyGuide();
   x.addTerm("mitosis");
-//  x.addDescription("mitosis", "Asexual division of cells");
-  console.log(x.descriptions);
-  // let y = new ParseText();
-  // y.text = "hello world";
-  // console.log(y.text);
-  //console.log();
+  //console.log(x.descriptions);
+
+  let y = new ParseText();
+  y.text = "hello world";
+  //console.log(y.text);
+
+  let z = new SummarizeText();
+  z.text = "summarize this";
+  console.log(z.summary);
 }
 main();
