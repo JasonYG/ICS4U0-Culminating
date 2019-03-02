@@ -44,13 +44,6 @@
         return this.termDescriptions;
       }
 
-    /**
-     * Adds a term description to the study guide
-     */
-     addDescription(term, description) {
-       this.termDescriptions[term] = description;
-     }
-
      /**
       * Creates a PDF study guide based on the object's attributes
       */
