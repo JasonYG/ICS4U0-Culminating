@@ -13,5 +13,10 @@ function main() {
   let z = new SummarizeText();
   z.text = "summarize this";
   console.log(z.summary);
+
+  let a = new ExtractTerms();
+  a.text = "extract this";
+  console.log(a.keyTerms);
+
 }
 main();
