@@ -6,6 +6,6 @@ function main() {
   x.addTerm("mitosis");
   x.addDescription("mitosis", "Asexual division of cells");
 
-  console.log(x.getDescriptions());
+  console.log(x.terms);
 }
 main();

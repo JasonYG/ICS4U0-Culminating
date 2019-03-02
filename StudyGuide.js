@@ -25,20 +25,20 @@
     }
 
     /**
-     * Returns the key terms
+     * Getter method that returns the key terms
      *
      * @returns {object} - The keyTerms array
      */
-     getTerms() {
+     get terms() {
        return this.keyTerms;
      }
 
      /**
-      * Returns the term descriptions
+      * Getter method that returns the term descriptions
       *
       * @returns {object} - The termDescriptions object
       */
-      getDescriptions() {
+      get descriptions() {
         return this.termDescriptions;
       }
 
