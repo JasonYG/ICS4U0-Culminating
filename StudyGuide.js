@@ -16,12 +16,14 @@
     }
 
    /**
-    * Adds a term to the study guide
+    * Adds a term to the study guide, with or without a description
     *
     * @param {string} term - The term to be added
+    * @param {string} description - The optional description to the term to be added
     */
-    addTerm(term) {
+    addTerm(term, description) {
       this.keyTerms.push(term);
+      if (description) this.termDescriptions[term] = description;
     }
 
     /**
