@@ -11,14 +11,6 @@
    constructor() {
      this.text = "";
    }
-   /**
-    * Setter method that changes the text to be parsed
-    *
-    * @param {string} text - The text to be parsed
-    */
-    set text(text) {
-      this._text = text;
-    }
 
    /**
     * Getter method that returns the text that is to be parsed
@@ -28,4 +20,15 @@
     get text() {
       return this._text;
     }
+
+   /**
+    * Setter method that changes the text to be parsed
+    *
+    * @param {string} text - The text to be parsed
+    */
+    set text(text) {
+      this._text = text;
+    }
+
+
  }
