@@ -14,7 +14,7 @@
       super();
       this.apiKey = apiKey;
       this.id = id || 1;
-      this.terms = [];
+      this.keyTerms = [];
     }
 
     /**
@@ -23,7 +23,7 @@
      * @returns {object} - The terms array
      */
      get keyTerms() {
-       return this.terms;
+       return this.keyTerms;
      }
 
      /**
