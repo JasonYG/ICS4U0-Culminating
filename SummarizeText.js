@@ -12,7 +12,7 @@
     */
     constructor(numberOfSentences, apiKey) {
       super();
-      this.numberOfSentences = numberOfSentences;
+      this.numberOfSentences = numberOfSentences || 7;
       this.apiKey = apiKey;
       this.summarizedText = "";
     }
