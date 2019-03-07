@@ -4,7 +4,7 @@
  * @class
  * @return the object that has the attributes and methods for this ParseText object
  */
- class ParseText {
+class ParseText {
    /**
     * Constructor function that creates a ParseText object
     */
@@ -29,6 +29,5 @@
     set text(text) {
       this._text = text;
     }
-
-
  }
+module.exports = ParseText

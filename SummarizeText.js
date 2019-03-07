@@ -1,3 +1,4 @@
+let ParseText = require("./ParseText");
 /**
  * This class summarizes the important information from a block of text
  *
@@ -31,6 +32,7 @@
      */
      callApi() {
        //TODO: write the logic to call the API
+       console.log("this is working");
      }
 
      /**
@@ -42,3 +44,4 @@
         //TODO: write the logic to parse the JSON
       }
  }
+module.exports = SummarizeText;

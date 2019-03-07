@@ -1,3 +1,5 @@
+const ParseText = require('./ParseText');
+
 /**
  * This class extracts the key terms from a block of text
  *
@@ -17,14 +19,14 @@
       this.keyTerms = [];
     }
 
-    /**
-     * Getter method that returns the key terms
-     *
-     * @returns {object} - The terms array
-     */
-     get keyTerms() {
-       return this.keyTerms;
-     }
+    // /**
+    //  * Getter method that returns the key terms
+    //  *
+    //  * @returns {object} - The terms array
+    //  */
+    //  get keyTerms() {
+    //    return this._keyTerms;
+    //  }
 
      /**
       * Calls the Microsoft Azure API
@@ -44,3 +46,5 @@
          //TODO: write the logic to parse the JSON
        }
  }
+
+ module.exports = ExtractTerms
