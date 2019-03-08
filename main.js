@@ -14,11 +14,11 @@ function main() {
   //console.log(y.text);
 
   let z = new SummarizeText();
-  z.text = "summarize this";
+  z.text = `summarize text`;
   z.callApi();
 
   let a = new ExtractTerms();
-  a.text = "extract this";
+  a.text = `extract this`;
   //console.log(a.keyTerms);
 
 }

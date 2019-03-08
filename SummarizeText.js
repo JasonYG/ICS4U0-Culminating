@@ -1,5 +1,6 @@
 let ParseText = require("./ParseText");
 let request = require("request");
+const config = require('./config.json');
 /**
  * This class summarizes the important information from a block of text
  *
@@ -15,7 +16,7 @@ let request = require("request");
     constructor(numberOfSentences, apiKey) {
       super();
       this.numberOfSentences = numberOfSentences || 7;
-      this.apiKey = apiKey;
+      this.apiKey = config.API_KEY;
       this.summarizedText = "";
     }
 
@@ -38,8 +39,8 @@ let request = require("request");
      callApi() {
        //API request parameters
        const PARAMETERS = {
-         SM_API_KEY: ADD KEY IN, //TODO: Remove API from source code
-         SM_URL: "https://en.wikipedia.org/wiki/Mitosis",
+         SM_API_KEY: "4C039A6343", //TODO: Remove API from source code
+        // SM_URL: "https://www.theguardian.com/world/2019/mar/07/north-korea-film-focuses-on-kim-jong-un-donald-trump-relationship-not-hanoi-summit-breakdown",
         // SM_LENGTH=N	 ,
         // SM_KEYWORD_COUNT=N,
         // SM_WITH_ENCODE: "",
@@ -54,7 +55,6 @@ let request = require("request");
        const URL_REQUEST = Object.keys(PARAMETERS)
         .reduce((acc, val) => `${acc}&${val}=${PARAMETERS[val]}`, "https://api.smmry.com?");
 
-       console.log(URL_REQUEST);
        //TODO: write the logic to call the API
       // const URL = 'https://api.smmry.com';
        let config = {
@@ -64,14 +64,14 @@ let request = require("request");
           'Content-Type': 'application/x-www-form-urlencoded',
           Expect: ''
         },
+        form: {
+          sm_api_input: this.text,
+        },
         json: true,
        };
 
-       // request.post(URL, (error, response, body) => {
-       //   console.log(response);
-       // });
        request(config, (error, response, body) => {
-         console.log(response);
+         this.updateSummary(body);
        });
      }
 
@@ -81,6 +81,9 @@ let request = require("request");
       * @param {object} summaryJSON - The JSON return object from the API
       */
       updateSummary(summaryJSON) {
+        console.log(this.summarizedText);
+        this.summarizedText = summaryJSON.sm_api_content;
+        console.log(this.summarizedText);
         //TODO: write the logic to parse the JSON
       }
  }
