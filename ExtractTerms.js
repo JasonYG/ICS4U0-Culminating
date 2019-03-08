@@ -1,4 +1,5 @@
 const ParseText = require('./ParseText');
+const config = require('./config.json');
 
 /**
  * This class extracts the key terms from a block of text
@@ -19,14 +20,14 @@ const ParseText = require('./ParseText');
       this.keyTerms = [];
     }
 
-    // /**
-    //  * Getter method that returns the key terms
-    //  *
-    //  * @returns {object} - The terms array
-    //  */
-    //  get keyTerms() {
-    //    return this._keyTerms;
-    //  }
+    /**
+     * Getter method that returns the key terms
+     *
+     * @returns {object} - The terms array
+     */
+     get keyTerms() {
+       return this._keyTerms;
+     }
 
      /**
       * Calls the Microsoft Azure API
@@ -34,6 +35,8 @@ const ParseText = require('./ParseText');
       * @returns {object} - The Microsoft Azure API's return JSON
       */
       callApi() {
+        const URL_LINK = "https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases";
+        const REQUEST_KEY = ""; //TODO: Sign up for Microsoft Azure API
         //TODO: write the logic to call the API
       }
 
