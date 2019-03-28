@@ -40,7 +40,7 @@ const config = require('./config.json');
        //API request parameters
        const PARAMETERS = {
          SM_API_KEY: "4C039A6343", //TODO: Remove API from source code
-        // SM_URL: "https://www.theguardian.com/world/2019/mar/07/north-korea-film-focuses-on-kim-jong-un-donald-trump-relationship-not-hanoi-summit-breakdown",
+         SM_URL: "https://www.theguardian.com/world/2019/mar/07/north-korea-film-focuses-on-kim-jong-un-donald-trump-relationship-not-hanoi-summit-breakdown",
         // SM_LENGTH=N	 ,
         // SM_KEYWORD_COUNT=N,
         // SM_WITH_ENCODE: "",
@@ -81,9 +81,8 @@ const config = require('./config.json');
       * @param {object} summaryJSON - The JSON return object from the API
       */
       updateSummary(summaryJSON) {
-        console.log(this.summarizedText);
         this.summarizedText = summaryJSON.sm_api_content;
-        console.log(this.summarizedText);
+        (this.summarizedText) ? console.log('The SMMRY API is working') : console.log('The SMMRY API is not working');
         //TODO: write the logic to parse the JSON
       }
  }
