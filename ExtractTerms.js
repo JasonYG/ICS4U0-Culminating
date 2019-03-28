@@ -17,7 +17,7 @@ const config = require('./config.json');
       super();
       this.apiKey = apiKey;
       this.id = id || 1;
-      this.keyTerms = [];
+      this.terms = [];
     }
 
     /**
@@ -38,6 +38,7 @@ const config = require('./config.json');
         const URL_LINK = "https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases";
         const REQUEST_KEY = ""; //TODO: Sign up for Microsoft Azure API
         //TODO: write the logic to call the API
+        console.log("The Microsoft Azure API will be implemented soon");
       }
 
       /**
