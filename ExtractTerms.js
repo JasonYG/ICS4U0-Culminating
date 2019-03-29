@@ -55,7 +55,7 @@ const request = require('request');
         	}
         };
         request(config, (error, response, body) => {
-          console.log(body.documents[0].keyPhrases);
+          console.log(body);
         });
       }
       /**

@@ -24,9 +24,10 @@ const config = require('./config.json');
      * Getter method that returns the summarized text
      */
      get summary() {
+       console.log(this.summarizedText);
        return this.summarizedText;
      }
-
+    
     /**
      * Calls the SMMRY API
      *
