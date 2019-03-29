@@ -1,6 +1,6 @@
 const ParseText = require('./ParseText');
 const config = require('./config.json');
-
+const request = require('request');
 /**
  * This class extracts the key terms from a block of text
  *
@@ -35,12 +35,29 @@ const config = require('./config.json');
       * @returns {object} - The Microsoft Azure API's return JSON
       */
       callApi() {
-        const URL_LINK = "https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases";
-        const REQUEST_KEY = ""; //TODO: Sign up for Microsoft Azure API
-        //TODO: write the logic to call the API
-        console.log("The Microsoft Azure API will be implemented soon");
-      }
+        const URL_REQUEST = "https://eastus.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases";
+        const REQUEST_KEY = "4f455c3df7184bd5a86ba47da57e4b32"; //TODO: Remove API from source code
 
+        let config = {
+        	method: "POST",
+        	url: URL_REQUEST,
+        	headers: {
+            "Ocp-Apim-Subscription-Key": REQUEST_KEY,
+        	},
+        	json: {
+            documents: [
+              {
+        		    language: "en",
+        		    id: "1",
+        		    text: this.text
+              }
+            ]
+        	}
+        };
+        request(config, (error, response, body) => {
+          console.log(body.documents[0].keyPhrases);
+        });
+      }
       /**
        * Updates the key term
        *
