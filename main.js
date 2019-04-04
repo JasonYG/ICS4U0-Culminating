@@ -4,19 +4,18 @@ let ExtractTerms = require("./ExtractTerms");
 /**
   * Function used to test object functionality
   */
-function main() {
+async function main() {
   let parser = new ParseText();
   let summarizer = new SummarizeText();
   let extractor = new ExtractTerms();
 
-  summarizer.callApi();
-  let textAPIs = [parser, summarizer, extractor];
-  // textAPIs.forEach(api => {
-  //   api.text = "This API is working correctly";
-  //   if (typeof api.callApi === 'function') api.callApi();
-  // });
-  console.log(summarizer.summarizedText);
-  // console.log(textAPIs[2].text);
-  // textAPIs[2].callApi();
+  //await summarizer.callApi();
+
+  let textAPIs = [summarizer, parser, extractor];
+  textAPIs.forEach(api => {
+    api.text = "This API is working correctly";
+    if (typeof api.callApi === 'function') api.callApi();
+  });
+ // textAPIs[2].callApi();
 }
 main();

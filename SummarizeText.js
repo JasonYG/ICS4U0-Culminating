@@ -1,6 +1,14 @@
 let ParseText = require("./ParseText");
 let request = require("request");
 const config = require('./config.json');
+const util = require('util');
+const requestPromise = config => new Promise((resolve, reject) => {
+  request(config, (err, res, body) => {
+    if (err) return reject(err);
+    resolve(body);
+  });
+});
+
 /**
  * This class summarizes the important information from a block of text
  *
@@ -27,7 +35,7 @@ const config = require('./config.json');
        console.log(this.summarizedText);
        return this.summarizedText;
      }
-    
+
     /**
      * Calls the SMMRY API
      *
@@ -37,7 +45,7 @@ const config = require('./config.json');
      *
      * @returns {object} - The SMMRY API's return JSON
      */
-     callApi() {
+     async callApi() {
        //API request parameters
        const PARAMETERS = {
          SM_API_KEY: "4C039A6343", //TODO: Remove API from source code
@@ -71,9 +79,13 @@ const config = require('./config.json');
         json: true,
        };
 
-       request(config, (error, response, body) => {
+       let body;
+       try {
+         body = await requestPromise(config);
          this.updateSummary(body);
-       });
+       } catch (e) {
+         console.error(e);
+       }
      }
 
      /**

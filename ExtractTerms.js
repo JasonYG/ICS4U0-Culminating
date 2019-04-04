@@ -55,7 +55,7 @@ const request = require('request');
         	}
         };
         request(config, (error, response, body) => {
-          console.log(body);
+          this.updateTerms(body);
         });
       }
       /**
@@ -65,6 +65,7 @@ const request = require('request');
        */
        updateTerms(termsJSON) {
          //TODO: write the logic to parse the JSON
+         console.log(termsJSON.documents[0].keyPhrases);
        }
  }
 
