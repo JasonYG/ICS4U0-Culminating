@@ -96,7 +96,6 @@ const requestPromise = config => new Promise((resolve, reject) => {
       updateSummary(summaryJSON) {
         this.summarizedText = summaryJSON.sm_api_content;
         (this.summarizedText) ? console.log('The SMMRY API is working') : console.log('The SMMRY API is not working');
-        //TODO: write the logic to parse the JSON
       }
  }
 module.exports = SummarizeText;
