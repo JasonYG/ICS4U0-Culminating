@@ -16,7 +16,8 @@ async function main() {
   extractor.text = summarizer.summary;
   await extractor.callApi();
 
+  extractor.sortTerms();
   console.log(extractor.keyTerms);
- // textAPIs[2].callApi();
+  
 }
 main();
