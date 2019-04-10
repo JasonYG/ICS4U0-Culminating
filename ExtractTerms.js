@@ -1,6 +1,15 @@
 const ParseText = require('./ParseText');
 const config = require('./config.json');
 const request = require('request');
+const util = require('util');
+const requestPromise = config => new Promise((resolve, reject) => {
+  request(config, (err, res, body) => {
+    if (err) return reject(err);
+    resolve(body);
+  });
+});
+
+
 /**
  * This class extracts the key terms from a block of text
  *
@@ -34,7 +43,7 @@ const request = require('request');
       *
       * @returns {object} - The Microsoft Azure API's return JSON
       */
-      callApi() {
+      async callApi() {
         const URL_REQUEST = "https://eastus.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases";
         const REQUEST_KEY = "4f455c3df7184bd5a86ba47da57e4b32"; //TODO: Remove API from source code
 
@@ -54,9 +63,13 @@ const request = require('request');
             ]
         	}
         };
-        request(config, (error, response, body) => {
+        let body;
+        try {
+          body = await requestPromise(config);
           this.updateTerms(body);
-        });
+        } catch (e) {
+          console.error(e);
+        }
       }
       /**
        * Updates the key term

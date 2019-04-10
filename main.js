@@ -9,13 +9,12 @@ async function main() {
   let summarizer = new SummarizeText();
   let extractor = new ExtractTerms();
 
-  //await summarizer.callApi();
+  //Demonstration of polymorphism
+  //let textAPIs = [summarizer, parser, extractor];
 
-  let textAPIs = [summarizer, parser, extractor];
-  textAPIs.forEach(api => {
-    api.text = "This API is working correctly";
-    if (typeof api.callApi === 'function') api.callApi();
-  });
+  await summarizer.callApi();
+  extractor.text = summarizer.summary;
+  await extractor.callApi();
  // textAPIs[2].callApi();
 }
 main();
