@@ -95,6 +95,32 @@ class ExtractTerms extends ParseText {
   sortTerms() {
     // Default JavaScript sort
     //this.terms.sort();
+
+    //Function that checks if a word is alphabetically before the other
+    const isBefore = (wordA, wordB) => {
+      for (let i = 0; i < Math.min(wordA.length, wordB.length); i++) {
+        if (wordA.charCodeAt(i) < wordB.charCodeAt(i)){
+           return true;
+        } else if (wordA.charCodeAt(i) > wordB.charCodeAt(i)) {
+          return false;
+        }
+      }
+      return (wordA.length < wordB.length) ? true : false;
+    };
+
+    const bubbleSort = (wordArray) => {
+      let swapped = false;
+      do {
+        swapped = false;
+        for (let i = 0; i < wordArray.length-1; i++) {
+          if (isBefore(wordArray[i+1], wordArray[i])) {
+            [wordArray[i+1], wordArray[i]] = [wordArray[i], wordArray[i+1]];
+            swapped = true;
+          }
+        }
+      } while(swapped);
+    };
+    bubbleSort(this.terms);
   }
 }
 

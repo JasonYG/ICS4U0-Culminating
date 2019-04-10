@@ -32,7 +32,6 @@ const requestPromise = config => new Promise((resolve, reject) => {
      * Getter method that returns the summarized text
      */
      get summary() {
-       console.log(this.summarizedText);
        return this.summarizedText;
      }
 
