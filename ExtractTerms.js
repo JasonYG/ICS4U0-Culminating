@@ -77,13 +77,13 @@ class ExtractTerms extends ParseText {
    * @param {object} termsJSON - The JSON return object from the API
    */
   updateTerms(termsJSON) {
-
-
-    this.terms = termsJSON.documents[0].keyPhrases.map((currentTerm) => {
-      currentTerm = (currentTerm.charCodeAt(0) < 97) ? currentTerm.charAt(0) + currentTerm: currentTerm;
-    }
-
-    );
+    // Capitalizes the first letter of each string
+    this.terms = termsJSON.documents[0].keyPhrases;
+    this.terms.map((currentTerm, index) => {
+      if (currentTerm.charCodeAt(0) >= 97) {
+        this.terms[index] = String.fromCharCode(currentTerm.charCodeAt(0) - 32) + currentTerm.substring(1);
+      }
+    });
   }
   /**
    * Sorts the key terms alphabetically
@@ -93,11 +93,9 @@ class ExtractTerms extends ParseText {
    * algorithms will be implemented.
    */
   sortTerms() {
-    this.terms.sort();
-    console.log('The terms Array has been sorted')
+    // Default JavaScript sort
+    //this.terms.sort();
   }
-
-
 }
 
 module.exports = ExtractTerms
