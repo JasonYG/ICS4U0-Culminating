@@ -35,7 +35,7 @@ const requestPromise = config => new Promise((resolve, reject) => {
      * @returns {object} - The terms array
      */
      get keyTerms() {
-       return this._keyTerms;
+       return this.terms;
      }
 
      /**

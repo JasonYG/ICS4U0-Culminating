@@ -15,6 +15,8 @@ async function main() {
   await summarizer.callApi();
   extractor.text = summarizer.summary;
   await extractor.callApi();
+
+  console.log(extractor.keyTerms);
  // textAPIs[2].callApi();
 }
 main();
