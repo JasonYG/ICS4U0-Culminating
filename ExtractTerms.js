@@ -120,7 +120,29 @@ class ExtractTerms extends ParseText {
         }
       } while(swapped);
     };
-    bubbleSort(this.terms);
+    //bubbleSort(this.terms);
+
+    const selectionSort = (wordArray) => {
+      let sortedArray = [];
+      let unsortedArray = wordArray;
+      
+      while (unsortedArray.length > 0) {
+        let minValue = unsortedArray[0];
+        let minIndex = 0;
+        for (let i = 1; i < unsortedArray.length; i++) {
+          if (isBefore(unsortedArray[i], minValue)) {
+            minValue = unsortedArray[i];
+            minIndex = i;
+          }
+        }
+        sortedArray.push(unsortedArray[minIndex]);
+        unsortedArray.splice(minIndex, 1);
+      }
+      
+      this.terms = sortedArray;
+      
+    };
+    selectionSort(this.terms);
   }
 }
 
