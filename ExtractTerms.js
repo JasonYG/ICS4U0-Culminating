@@ -2,6 +2,7 @@ const ParseText = require('./ParseText');
 const config = require('./config.json');
 const request = require('request');
 const util = require('util');
+const fs = require('fs');
 const requestPromise = config => new Promise((resolve, reject) => {
   request(config, (err, res, body) => {
     if (err) return reject(err);
@@ -142,7 +143,40 @@ class ExtractTerms extends ParseText {
       this.terms = sortedArray;
       
     };
-    selectionSort(this.terms);
+    //selectionSort(this.terms);
+    
+    const quickSort = (wordArray) => {
+      const partition = (subArray) => {
+        const pivot = subArray[subArray.length - 1];
+        let partitionedArray = [pivot];
+        while (subArray.length > 1) {
+          if (isBefore(pivot, subArray[0])) {
+            partitionedArray.push(subArray[0]);
+            subArray.splice(0, 1);
+          } else {
+            partitionedArray.unshift(subArray[0]);
+            subArray.splice(0, 1);
+          }
+        }
+        console.log(partitionedArray);
+      };
+      partition(wordArray);
+      //console.log(wordArray);
+
+    };
+    quickSort(this.terms);
+  }
+  /**
+   * Writes the key terms to a text file
+   * 
+   * This method uses the fs library to do file i/o
+   */
+
+  writeToFile() {
+    const fileWriter = fs.createWriteStream('sortedTerms.txt');
+    this.terms.forEach(term => {
+      fileWriter.write(`${term}\n`);
+    });
   }
 }
 

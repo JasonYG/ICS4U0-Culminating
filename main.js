@@ -29,10 +29,7 @@ async function main() {
   console.timeEnd('Total time: ');
 
   console.time('Write to file: ');
-  const stream = fs.createWriteStream('sortedTerms.txt');
-  stream.once('open', () => {
-    extractor.terms.map((currentTerm) => stream.write(term + "\n"));
-  });
+  extractor.writeToFile();
   console.timeEnd('Write to file: ');
 
 
