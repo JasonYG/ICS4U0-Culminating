@@ -147,22 +147,42 @@ class ExtractTerms extends ParseText {
     
     const quickSort = (wordArray) => {
       const partition = (subArray) => {
+        //console.log(subArray);
+        if (subArray.length < 2)
+        {
+          return subArray;
+        }
         const pivot = subArray[subArray.length - 1];
+        let pivotIndex = 0;
         let partitionedArray = [pivot];
         while (subArray.length > 1) {
-          if (isBefore(pivot, subArray[0])) {
-            partitionedArray.push(subArray[0]);
-            subArray.splice(0, 1);
-          } else {
+          // console.log(`${pivot} ${subArray[0]}`);
+          // console.log(isBefore(subArray[0], pivot));
+           //console.log(partitionedArray);
+          if (isBefore(subArray[0], pivot)) {
             partitionedArray.unshift(subArray[0]);
+            pivotIndex++;
+            subArray.splice(0, 1);
+          } else if (pivot == subArray[0]) {
+            partitionedArray.splice(partitionedArray.indexOf(pivot), 0, subArray[0]);
+            subArray.splice(0, 1);
+            pivotIndex++;
+          }
+          else {
+            partitionedArray.push(subArray[0]);
             subArray.splice(0, 1);
           }
         }
-        console.log(partitionedArray);
+        
+        //console.log(partitionedArray === partitionedArray.slice(0));
+        //console.log(partitionedArray.slice(0));
+       // if (pivotIndex != 0) {
+          return partition(partitionedArray.slice(0, pivotIndex)).concat(partition(partitionedArray.slice(pivotIndex)));
+        // } else {
+        //   return partitionedArray;
+        // }
       };
       partition(wordArray);
-      //console.log(wordArray);
-
     };
     quickSort(this.terms);
   }
