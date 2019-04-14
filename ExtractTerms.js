@@ -152,7 +152,7 @@ class ExtractTerms extends ParseText {
         {
           return subArray;
         }
-        const pivot = subArray[subArray.length - 1];
+        const pivot = subArray[Math.floor(subArray.length/2)];
         let pivotIndex = 0;
         let partitionedArray = [pivot];
         while (subArray.length > 1) {
@@ -175,15 +175,16 @@ class ExtractTerms extends ParseText {
         }
         
         //console.log(partitionedArray === partitionedArray.slice(0));
-        //console.log(partitionedArray.slice(0));
+       // console.log(partitionedArray);
        // if (pivotIndex != 0) {
-          return partition(partitionedArray.slice(0, pivotIndex)).concat(partition(partitionedArray.slice(pivotIndex)));
+          return partition(partitionedArray.slice(0, pivotIndex)).concat([pivot]).concat(partition(partitionedArray.slice(pivotIndex+1)));
         // } else {
         //   return partitionedArray;
         // }
       };
       partition(wordArray);
     };
+    //selectionSort(this.terms);
     quickSort(this.terms);
   }
   /**
