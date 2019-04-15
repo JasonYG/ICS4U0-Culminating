@@ -173,19 +173,52 @@ class ExtractTerms extends ParseText {
             subArray.splice(0, 1);
           }
         }
-        
-        //console.log(partitionedArray === partitionedArray.slice(0));
-       // console.log(partitionedArray);
-       // if (pivotIndex != 0) {
-          return partition(partitionedArray.slice(0, pivotIndex)).concat([pivot]).concat(partition(partitionedArray.slice(pivotIndex+1)));
-        // } else {
-        //   return partitionedArray;
-        // }
+        return partition(partitionedArray.slice(0, pivotIndex)).concat([pivot]).concat(partition(partitionedArray.slice(pivotIndex+1)));
       };
       partition(wordArray);
     };
+    const mergeSort = (wordArray) => {
+      //Base case: if an array has length <= 1, it
+      //is already sorted by default
+      if (wordArray.length <= 1) return wordArray;
+
+      const middleIndex = Math.floor(wordArray.length/2);
+      let leftHalf = wordArray.slice(0, middleIndex);
+      let rightHalf = wordArray.slice(middleIndex);
+
+      //console.log(wordArray);
+
+      leftHalf = mergeSort(leftHalf);
+      rightHalf = mergeSort(rightHalf);
+
+      //console.log(leftHalf);
+      const merge = (leftArr, rightArr) => {
+        let mergedArray = [];
+
+        //console.log(`${leftArr} ${rightArr}`)
+
+        while (leftArr.length > 0 || rightArr.length > 0) {
+          const leftItem = (leftArr.length > 0) ? leftArr[0] : rightArr[0] + "z";
+          const rightItem = (rightArr.length > 0) ? rightArr[0] : leftArr[0] + "z";
+          
+          if (isBefore(leftItem, rightItem)) {
+            mergedArray.push(leftItem);
+            leftArr = leftArr.splice(1);
+          } else {
+            mergedArray.push(rightItem);
+            rightArr = rightArr.splice(1);
+          }
+        }
+        //console.log(mergedArray);
+        return mergedArray;
+      };
+      return merge(leftHalf, rightHalf);
+    };
+
     //selectionSort(this.terms);
-    quickSort(this.terms);
+    //quickSort(this.terms);
+    //this.terms = mergeSort(this.terms);
+    this.terms.sort();
   }
   /**
    * Writes the key terms to a text file
