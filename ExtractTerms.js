@@ -147,7 +147,6 @@ class ExtractTerms extends ParseText {
     
     const quickSort = (wordArray) => {
       const partition = (subArray) => {
-        //console.log(subArray);
         if (subArray.length < 2)
         {
           return subArray;
@@ -156,9 +155,6 @@ class ExtractTerms extends ParseText {
         let pivotIndex = 0;
         let partitionedArray = [pivot];
         while (subArray.length > 1) {
-          // console.log(`${pivot} ${subArray[0]}`);
-          // console.log(isBefore(subArray[0], pivot));
-           //console.log(partitionedArray);
           if (isBefore(subArray[0], pivot)) {
             partitionedArray.unshift(subArray[0]);
             pivotIndex++;
@@ -186,16 +182,11 @@ class ExtractTerms extends ParseText {
       let leftHalf = wordArray.slice(0, middleIndex);
       let rightHalf = wordArray.slice(middleIndex);
 
-      //console.log(wordArray);
-
       leftHalf = mergeSort(leftHalf);
       rightHalf = mergeSort(rightHalf);
 
-      //console.log(leftHalf);
       const merge = (leftArr, rightArr) => {
         let mergedArray = [];
-
-        //console.log(`${leftArr} ${rightArr}`)
 
         while (leftArr.length > 0 || rightArr.length > 0) {
           const leftItem = (leftArr.length > 0) ? leftArr[0] : rightArr[0] + "z";
@@ -209,7 +200,6 @@ class ExtractTerms extends ParseText {
             rightArr = rightArr.splice(1);
           }
         }
-        //console.log(mergedArray);
         return mergedArray;
       };
       return merge(leftHalf, rightHalf);
@@ -219,6 +209,41 @@ class ExtractTerms extends ParseText {
     //quickSort(this.terms);
     //this.terms = mergeSort(this.terms);
     this.terms.sort();
+  }
+  /**
+   * Finds the index of the given term
+   * 
+   * This method uses a simple linear search algorithm. Returns -1
+   * if the term does not exist in the term array.
+   * 
+   * @param {string} term - The term to be found
+   * @returns {number} - The index of the term.
+   */
+  findTerm(term) {
+    //Function that checks if a word is alphabetically before the other
+    const isBefore = (wordA, wordB) => {
+      for (let i = 0; i < Math.min(wordA.length, wordB.length); i++) {
+        if (wordA.charCodeAt(i) < wordB.charCodeAt(i)){
+            return true;
+        } else if (wordA.charCodeAt(i) > wordB.charCodeAt(i)) {
+          return false;
+        }
+      }
+      return (wordA.length < wordB.length) ? true : false;
+    };
+    const linearSearch = (termsArray, term) => {
+      for (let i = 0; i < termsArray.length; i++) {
+        if (termsArray[i] === term) return i;
+      }
+      return -1; 
+    }
+    const binarySearch = (termsArray, term) => {
+      const mid = Math.floor(termsArray.length/2);
+      if (termsArray[mid] == term) return mid;
+      if (termsArray.length <= 1) return -1;
+      return (isBefore(term, termsArray[mid])) ? binarySearch(termsArray.splice(0, mid), term) : binarySearch(termsArray.splice(mid), term);
+    };
+    return linearSearch(this.terms, term);
   }
   /**
    * Writes the key terms to a text file

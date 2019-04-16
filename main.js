@@ -22,16 +22,21 @@ async function main() {
   console.timeEnd('Read file: ');
   //await extractor.callApi();
 
-  console.time('Sorting: ');
-  extractor.sortTerms();
-  console.timeEnd('Sorting: ');
+  // console.time('Sorting: ');
+   extractor.sortTerms();
+  // console.timeEnd('Sorting: ');
+  // //console.log(extractor.keyTerms);
+  // console.timeEnd('Total time: ');
+
+  // console.time('Write to file: ');
+  // extractor.writeToFile();
+  // console.timeEnd('Write to file: ');
+
+  console.time('Searching: ');
+  console.log(extractor.findTerm('term'));
+  console.timeEnd('Searching: ');
+
+
   //console.log(extractor.keyTerms);
-  console.timeEnd('Total time: ');
-
-  console.time('Write to file: ');
-  extractor.writeToFile();
-  console.timeEnd('Write to file: ');
-
-
 }
 main();
