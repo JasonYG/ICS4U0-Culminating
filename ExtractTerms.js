@@ -243,7 +243,7 @@ class ExtractTerms extends ParseText {
       if (termsArray.length <= 1) return -1;
       return (isBefore(term, termsArray[mid])) ? binarySearch(termsArray.splice(0, mid), term) : binarySearch(termsArray.splice(mid), term);
     };
-    return linearSearch(this.terms, term);
+    return binarySearch(this.terms, term);
   }
   /**
    * Writes the key terms to a text file

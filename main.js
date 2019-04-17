@@ -23,7 +23,6 @@ async function main() {
   //await extractor.callApi();
 
   // console.time('Sorting: ');
-   extractor.sortTerms();
   // console.timeEnd('Sorting: ');
   // //console.log(extractor.keyTerms);
   // console.timeEnd('Total time: ');
@@ -32,9 +31,10 @@ async function main() {
   // extractor.writeToFile();
   // console.timeEnd('Write to file: ');
 
-  console.time('Searching: ');
+  console.time('Sorting + Searching: ');
+  extractor.sortTerms();
   console.log(extractor.findTerm('term'));
-  console.timeEnd('Searching: ');
+  console.timeEnd('Sorting + Searching: ');
 
 
   //console.log(extractor.keyTerms);
