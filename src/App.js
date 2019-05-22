@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import logo from "./logo.svg";
+import NavBar from "./components/navbar";
+import "./App.css";
+import "bulma/css/bulma.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    subheadings: ["LOGIN", "ABOUT", "CONTACT"],
+    imagePath: "../../logo.png"
+  };
+  render() {
+    return (
+      <div className="App">
+        <NavBar
+          subheadings={this.state.subheadings}
+          imagePath={this.state.imagePath}
+        />
+      </div>
+    );
+  }
 }
 
 export default App;
