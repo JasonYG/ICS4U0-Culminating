@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import NavBar from "./components/navbar";
-import "./App.css";
-import "bulma/css/bulma.css";
+import "./sass/App.scss";
 
 class App extends Component {
   state = {
-    subheadings: ["LOGIN", "ABOUT", "CONTACT"],
+    subheadings: ["MISSION", "ABOUT", "CONTACT"],
     imagePath: "../../logo.png"
   };
   render() {

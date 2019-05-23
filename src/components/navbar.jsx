@@ -1,6 +1,5 @@
 import React from "react";
 import Logo from "./logo";
-import HomeTitle from "./homeTitle";
 import Subheading from "./subheading";
 
 const NavBar = props => {
@@ -10,9 +9,15 @@ const NavBar = props => {
     <nav className="navbar">
       <div className="navbar-brand">
         <Logo />
+        <h1 className="navbar-item">Study4Life</h1>
       </div>
-
-      <HomeTitle />
+      <div className="navbar-menu">
+        <div className="navbar-end">
+          {subheadings.map(subheading => (
+            <Subheading heading={subheading} />
+          ))}
+        </div>
+      </div>
     </nav>
   );
 };
