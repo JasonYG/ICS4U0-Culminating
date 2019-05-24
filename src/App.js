@@ -11,10 +11,21 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <NavBar
-          subheadings={this.state.subheadings}
-          imagePath={this.state.imagePath}
-        />
+        <section className="hero  is-fullheight">
+          <div className="background" />
+          <div className="hero-head">
+            <NavBar
+              subheadings={this.state.subheadings}
+              imagePath={this.state.imagePath}
+            />
+          </div>
+          <div class="hero-body">
+            <div class="container has-text-centered">
+              <h1 class="title">Create a study guide today.</h1>
+              <h2 class="subtitle">The Kool Kids Klub</h2>
+            </div>
+          </div>
+        </section>
       </div>
     );
   }
