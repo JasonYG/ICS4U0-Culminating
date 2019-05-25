@@ -19,10 +19,15 @@ class App extends Component {
               imagePath={this.state.imagePath}
             />
           </div>
-          <div class="hero-body">
-            <div class="container has-text-centered">
-              <h1 class="title">Create a study guide today.</h1>
-              <h2 class="subtitle">The Kool Kids Klub</h2>
+          <div className="hero-body">
+            <div className="container has-text-centered">
+              <h1 className="title">Create a study guide today.</h1>
+              <h2 className="subtitle">
+                The Kool Kids Klub The Kool Kids Klub The Kool Kids Klub The
+                Kool Kids Klub The Kool Kids Klub The Kool Kids Klub The Kool
+                Kids Klub The Kool Kids Klub The Kool Kids Klub The Kool Kids
+                Klub The Kool Kids Klub The Kool Kids Klub The Kool Kids Klub
+              </h2>
             </div>
           </div>
         </section>

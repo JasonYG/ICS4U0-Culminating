@@ -14,7 +14,7 @@ const NavBar = props => {
       <div className="navbar-menu">
         <div className="navbar-end">
           {subheadings.map(subheading => (
-            <Subheading heading={subheading} />
+            <Subheading key={subheading} heading={subheading} />
           ))}
         </div>
       </div>
