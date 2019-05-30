@@ -25,7 +25,10 @@ class App extends Component {
             </div>
             <div className="hero-body">
               <div className="container has-text-centered">
-                <Route path="/" component={Home} />
+                <Route path="/" exact component={Home} />
+                {/* <Route path="/mission/" component={Mission} />
+                <Route path="/mission/" component={Mission} />
+                <Route path="/mission/" component={Mission} /> */}
               </div>
             </div>
           </Router>
