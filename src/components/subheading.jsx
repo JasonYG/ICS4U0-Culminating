@@ -1,14 +1,15 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Subheading = props => {
   return (
-    <Link
+    <NavLink
       to={`/${props.heading.toLowerCase()}/`}
+      activeClassName="is-active"
       className="navbar-item subheading is-tab"
     >
       {props.heading}
-    </Link>
+    </NavLink>
   );
 };
 

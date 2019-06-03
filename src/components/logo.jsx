@@ -1,10 +1,9 @@
 import React from "react";
-// import "../App.css";
 
 const Logo = props => {
   const iconCss = {};
   return (
-    <a className="navbar-item" href="">
+    <a className="navbar-item">
       <img src={require("../images/logo.png")} className="img-fluid logo-img" />
     </a>
   );
