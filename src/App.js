@@ -6,6 +6,7 @@ import Home from "./components/home";
 import Mission from "./components/mission";
 import About from "./components/about";
 import Contact from "./components/contact";
+import Study from "./components/study";
 import { Switch } from "react-router-dom";
 import Auth from "./utilities/auth";
 import history from "./utilities/history";
@@ -38,11 +39,13 @@ class App extends Component {
               <Switch>
                 <Route path="/about/" component={About} />
                 <Route path="/contact/" component={Contact} />
+                <Route path="/mission/" component={Mission} />
+                <Route path="/study/" component={Study} />
                 <Route
-                  path="/callback"
+                  path="/callback/"
                   render={props => {
                     this.handleAuthentication(props);
-                    history.push("/mission");
+                    history.replace("/study/");
                   }}
                 />
                 <Route path="/" component={Home} />

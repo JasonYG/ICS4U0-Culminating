@@ -7,6 +7,7 @@ class Home extends Component {
     this.auth = new Auth();
   }
   render() {
+    const isLoggedIn = !!localStorage.getItem("isLoggedIn");
     return (
       <div className="home-div">
         <h1 className="title is-2">Create a study guide today.</h1>
@@ -16,7 +17,8 @@ class Home extends Component {
         </h2>
         <a
           className="button is-primary is-inverted is-outlined subtitle is-4"
-          onClick={this.auth.login}
+          disabled={isLoggedIn}
+          onClick={isLoggedIn ? null : this.auth.login}
         >
           Login
         </a>
