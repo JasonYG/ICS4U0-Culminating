@@ -13,9 +13,9 @@ app.get("/api/test", (req, res) => res.send({ Hello: "world" }));
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
-let ParseText = require("./ParseText");
-let SummarizeText = require("./SummarizeText");
-let ExtractTerms = require("./ExtractTerms");
+let ParseText = require("./back-end/ParseText");
+let SummarizeText = require("./back-end/SummarizeText");
+let ExtractTerms = require("./back-end/ExtractTerms");
 
 const fs = require("fs");
 /**
