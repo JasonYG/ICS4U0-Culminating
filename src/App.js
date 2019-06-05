@@ -40,12 +40,13 @@ class App extends Component {
                 <Route path="/about/" component={About} />
                 <Route path="/contact/" component={Contact} />
                 <Route path="/mission/" component={Mission} />
-                <Route path="/study/" component={Study} />
+                <Route path="/study/:idToken?" component={Study} />
                 <Route
                   path="/callback/"
                   render={props => {
                     this.handleAuthentication(props);
-                    history.replace("/study/");
+                    console.log(auth.getAccessToken());
+                    history.replace(`/study/${auth.getAccessToken()}`);
                   }}
                 />
                 <Route path="/" component={Home} />

@@ -42,19 +42,19 @@ export default class Auth {
   };
 
   setSession = authResult => {
-    // Set isLoggedIn flag in localStorage
-    localStorage.setItem("isLoggedIn", "true");
-
     // Set the time that the Access Token will expire at
     let expiresAt = authResult.expiresIn * 1000 + new Date().getTime();
     this.accessToken = authResult.accessToken;
     this.idToken = authResult.idToken;
     this.expiresAt = expiresAt;
 
-    console.log(this.accessToken);
-
-    // navigate to the home route
-    // history.replace("/home");
+    // Set localStorage variables
+    localStorage.setItem("isLoggedIn", "1");
+    localStorage.setItem("accessToken", this.accessToken);
+    localStorage.setItem("idToken", this.idToken);
+    localStorage.setItem("expiresAt", this.expiresAt);
+    // console.log(new Date(this.expiresAt) < new Date("June 5, 2019 10:56:00"));
+    //console.log(new Date().getTime());
   };
 
   renewSession = () => {
