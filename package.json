@@ -1,40 +1,12 @@
 {
   "name": "ics4u-culminating",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "main": "back-end/main.js",
+  "license": "MIT",
   "dependencies": {
-    "auth0-js": "^9.10.4",
-    "bootstrap": "^4.3.1",
-    "bulma": "^0.7.5",
-    "express": "^4.17.1",
-    "heroku": "^7.25.0",
-    "node-sass": "^4.12.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-router-dom": "^5.0.0",
-    "react-scripts": "3.0.1"
+    "express": "^4.15.3"
   },
   "scripts": {
-    "start": "node ./back-end/main.js",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "heroku-postbuild": "npm install && npm run build"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "proxy": "http://localhost:5000"
+    "start": "node backend-/main.js"
+  }
 }
