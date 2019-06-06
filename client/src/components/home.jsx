@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Auth from "./../utilities/auth";
+import Auth from "../utilities/auth";
 
 class Home extends Component {
   constructor() {

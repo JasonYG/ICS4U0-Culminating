@@ -4,10 +4,15 @@
   "main": "back-end/main.js",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.15.3"
+    "express": "^4.15.3",
+    "request": "^2.88.0"
   },
   "scripts": {
     "start": "node main.js",
     "heroku-postbuild": "cd client && npm install && npm run build"
-  }
+  },
+  "cacheDirectories": [
+    "client/node_modules",
+    "node_modules"
+  ]
 }

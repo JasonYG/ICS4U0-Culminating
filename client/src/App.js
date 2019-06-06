@@ -20,7 +20,10 @@ class App extends Component {
   };
   handleAuthentication = (nextState, replace) => {
     if (/access_token|id_token|error/.test(nextState.location.hash)) {
-      auth.handleAuthentication();
+      auth.handleAuthentication().then(() => {
+        console.log(auth.getAccessToken());
+        history.replace(`/study/${auth.getAccessToken()}`);
+      });
     }
   };
   render() {
@@ -41,14 +44,7 @@ class App extends Component {
                 <Route path="/contact/" component={Contact} />
                 <Route path="/mission/" component={Mission} />
                 <Route path="/study/:idToken?" component={Study} />
-                <Route
-                  path="/callback/"
-                  render={props => {
-                    this.handleAuthentication(props);
-                    console.log(auth.getAccessToken());
-                    history.replace(`/study/${auth.getAccessToken()}`);
-                  }}
-                />
+                <Route path="/callback/" render={this.handleAuthentication} />
                 <Route path="/" component={Home} />
               </Switch>
             </div>

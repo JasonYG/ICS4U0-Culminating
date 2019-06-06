@@ -8,7 +8,10 @@ export default class Auth {
   auth0 = new auth0.WebAuth({
     domain: "ics4u.auth0.com",
     clientID: "zfEeSMmnfCtMKzQhzHQPLmjB9GjicNBx",
-    redirectUri: "http://localhost:3000/callback",
+    redirectUri:
+      process.env.NODE_ENV === "production"
+        ? "http://ics4u-culminating.herokuapp.com/callback"
+        : "http://localhost:3000/callback",
     responseType: "token id_token",
     scope: "openid"
   });
@@ -22,15 +25,17 @@ export default class Auth {
     this.renewSession = this.renewSession.bind(this);
   }
 
-  handleAuthentication = () => {
-    this.auth0.parseHash((err, authResult) => {
-      if (authResult && authResult.accessToken && authResult.idToken) {
-        this.setSession(authResult);
-      } else if (err) {
-        console.log(err);
-        alert(`Error: ${err.error}. Check the console for further details.`);
-      }
-    });
+  handleAuthentication = async () => {
+    await new Promise((resolve, reject) =>
+      this.auth0.parseHash((err, authResult) => {
+        if (authResult && authResult.accessToken && authResult.idToken) {
+          resolve(this.setSession(authResult));
+        } else if (err) {
+          reject(err);
+          alert(`Error: ${err.error}. Check the console for further details.`);
+        }
+      })
+    );
   };
 
   getAccessToken = () => {
