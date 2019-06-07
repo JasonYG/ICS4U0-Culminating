@@ -25,8 +25,8 @@ export default class Auth {
     this.renewSession = this.renewSession.bind(this);
   }
 
-  handleAuthentication = async () => {
-    await new Promise((resolve, reject) =>
+  handleAuthentication = () => {
+    return new Promise((resolve, reject) =>
       this.auth0.parseHash((err, authResult) => {
         if (authResult && authResult.accessToken && authResult.idToken) {
           resolve(this.setSession(authResult));

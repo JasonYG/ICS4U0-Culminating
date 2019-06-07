@@ -1,14 +1,14 @@
 {
   "name": "ics4u-culminating",
   "version": "1.0.0",
-  "main": "back-end/main.js",
+  "main": "server.js",
   "license": "MIT",
   "dependencies": {
     "express": "^4.15.3",
     "request": "^2.88.0"
   },
   "scripts": {
-    "start": "node main.js",
+    "start": "node server.js",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "cacheDirectories": [
