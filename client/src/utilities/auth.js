@@ -11,9 +11,9 @@ export default class Auth {
     redirectUri:
       process.env.NODE_ENV === "production"
         ? "http://ics4u-culminating.herokuapp.com/callback"
-        : "http://localhost:3000/callback",
+        : "http://localhost:5000/callback",
     responseType: "token id_token",
-    scope: "openid"
+    scope: "openid email"
   });
   constructor() {
     this.login = this.login.bind(this);

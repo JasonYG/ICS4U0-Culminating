@@ -22,7 +22,7 @@ class App extends Component {
     if (/access_token|id_token|error/.test(nextState.location.hash)) {
       auth.handleAuthentication().then(() => {
         console.log(auth.getAccessToken());
-        history.replace(`/study/${auth.getAccessToken()}`);
+        history.replace(`/study/${auth.getIdToken()}`);
       });
     }
   };
