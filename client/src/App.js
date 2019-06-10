@@ -7,7 +7,7 @@ import Mission from "./components/mission";
 import About from "./components/about";
 import Contact from "./components/contact";
 import Study from "./components/study";
-import { Switch } from "react-router-dom";
+import { Switch, Redirect } from "react-router-dom";
 import Auth from "./utilities/auth";
 import history from "./utilities/history";
 import "./sass/App.scss";
@@ -18,12 +18,17 @@ class App extends Component {
     subheadings: ["MISSION", "ABOUT", "CONTACT"],
     imagePath: "../../logo.png"
   };
-  handleAuthentication = (nextState, replace) => {
+  handleAuthentication = async (nextState, replace) => {
+    let so;
     if (/access_token|id_token|error/.test(nextState.location.hash)) {
       auth.handleAuthentication().then(() => {
-        console.log(auth.getAccessToken());
-        history.replace(`/study/${auth.getIdToken()}`);
+        console.log("d");
+
+        history.push(`/study/${auth.getIdToken()}`);
       });
+      // );
+      // console.log("i'm here");
+      // return <Link to={`/study/${auth.getIdToken()}`} />;
     }
   };
   render() {
@@ -43,8 +48,8 @@ class App extends Component {
                 <Route path="/about/" component={About} />
                 <Route path="/contact/" component={Contact} />
                 <Route path="/mission/" component={Mission} />
-                <Route path="/study/:idToken?" component={Study} />
-                <Route path="/callback/" render={this.handleAuthentication} />
+                <Route path="/study" component={Study} />
+                <Route path="/callback" render={this.handleAuthentication} />
                 <Route path="/" component={Home} />
               </Switch>
             </div>
