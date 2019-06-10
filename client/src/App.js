@@ -9,6 +9,7 @@ import Contact from "./components/contact";
 import Study from "./components/study";
 import { Switch, Redirect } from "react-router-dom";
 import Auth from "./utilities/auth";
+import Callback from "./components/callback";
 import history from "./utilities/history";
 import "./sass/App.scss";
 const auth = new Auth();
@@ -49,7 +50,7 @@ class App extends Component {
                 <Route path="/contact/" component={Contact} />
                 <Route path="/mission/" component={Mission} />
                 <Route path="/study" component={Study} />
-                <Route path="/callback" render={this.handleAuthentication} />
+                <Route path="/callback" component={Callback} />
                 <Route path="/" component={Home} />
               </Switch>
             </div>
