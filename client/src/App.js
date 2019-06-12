@@ -27,9 +27,6 @@ class App extends Component {
 
         history.push(`/study/${auth.getIdToken()}`);
       });
-      // );
-      // console.log("i'm here");
-      // return <Link to={`/study/${auth.getIdToken()}`} />;
     }
   };
   render() {
@@ -49,9 +46,15 @@ class App extends Component {
                 <Route path="/about/" component={About} />
                 <Route path="/contact/" component={Contact} />
                 <Route path="/mission/" component={Mission} />
-                <Route path="/study" component={Study} />
+                <Route
+                  path="/study"
+                  render={() => <Study idToken={auth.getIdToken()} />}
+                />
                 <Route path="/callback" component={Callback} />
-                <Route path="/" component={Home} />
+                <Route
+                  path="/"
+                  render={props => <Home auth={auth} {...props} />}
+                />
               </Switch>
             </div>
           </div>

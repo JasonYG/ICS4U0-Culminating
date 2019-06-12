@@ -1,29 +1,21 @@
-const jwtDecode = require("jwt-decode");
-function login(idToken, email, password, callback) {
-  const mongo = require("mongodb");
-  // const bcrypt = require("bcrypt");
-  console.log(jwtDecode(idToken));
-  // mongo(
-  //   "mongodb+srv://studyguide:raaghavisgay@cluster0-pitl1.mongodb.net/test?retryWrites=true&w=majority",
-  //   function(db) {
-  //     const users = db.collection("users");
-
-  //     users.findOne({ email: email }, function(err, user) {
-  //       if (err) return callback(err);
-  //       if (!user) return callback(new WrongUsernameOrPasswordError(email));
-
-  //       bcrypt.compare(password, user.password, function(err, isValid) {
-  //         if (err || !isValid)
-  //           return callback(err || new WrongUsernameOrPasswordError(email));
-
-  //         return callback(null, {
-  //           user_id: user._id.toString(),
-  //           nickname: user.nickname,
-  //           email: user.email
-  //         });
-  //       });
-  //     });
-  //   }
-  // );
-}
+const login = async (email, callback) => {
+  const MongoClient = require("mongodb").MongoClient;
+  const uri =
+    "mongodb+srv://studyguide:raaghavisgay@cluster0-pitl1.mongodb.net/test?retryWrites=true&w=majority";
+  MongoClient.connect(uri, { useNewUrlParser: true }, (err, client) => {
+    const db = client.db("studyguide");
+    const users = db.collection("users");
+    users.findOne({ email }, (err, user) => {
+      if (err) throw err;
+      if (user) {
+        users.update(user, { $set: { updateIsWorking: "true" } });
+        return console.log(user);
+      }
+      users.insert({ email: email }, (err, inserted) => {
+        if (err) throw err;
+        if (inserted) console.log("Successfully added user!");
+      });
+    });
+  });
+};
 module.exports = login;

@@ -1,11 +1,6 @@
 import React, { Component } from "react";
-import Auth from "../utilities/auth";
 
 class Home extends Component {
-  constructor() {
-    super();
-    this.auth = new Auth();
-  }
   render() {
     const isLoggedIn = false; //localStorage.getItem("isLoggedIn");
     return (
@@ -18,7 +13,7 @@ class Home extends Component {
         <a
           className="button is-primary is-inverted is-outlined subtitle is-4"
           disabled={isLoggedIn}
-          onClick={isLoggedIn ? null : this.auth.login}
+          onClick={isLoggedIn ? null : this.props.auth.login}
         >
           Login
         </a>
