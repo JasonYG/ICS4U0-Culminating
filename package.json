@@ -11,11 +11,15 @@
     "request": "^2.88.0"
   },
   "scripts": {
-    "start": "node server.js",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "start": "nodemon server.js",
+    "heroku-postbuild": "cd client && npm install && npm run build",
+    "build-client": "cd client; npm run build; cd .."
   },
   "cacheDirectories": [
     "client/node_modules",
     "node_modules"
-  ]
+  ],
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
 }
