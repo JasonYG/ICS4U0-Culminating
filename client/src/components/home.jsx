@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class Home extends Component {
   render() {
-    const isLoggedIn = false; //localStorage.getItem("isLoggedIn");
+    const isLoggedIn = true; //localStorage.getItem("isLoggedIn");
     return (
       <div className="home-div">
         <h1 className="title is-2">Create a study guide today.</h1>

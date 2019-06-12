@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Auth from "../utilities/auth";
+import Auth from "../../utilities/auth";
 import { Redirect } from "react-router-dom";
 const auth = new Auth();
 class Callback extends Component {

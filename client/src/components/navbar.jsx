@@ -9,7 +9,7 @@ const NavBar = props => {
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <Logo />
+        <Logo imagePath={props.imagePath} />
         <Link to="/" className="navbar-item">
           Study4Life
         </Link>

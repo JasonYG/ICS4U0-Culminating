@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { async } from "q";
 
 class Study extends Component {
   componentDidMount() {
@@ -19,10 +18,8 @@ class Study extends Component {
     });
 
     const body = await test.json();
-    console.log(body);
   };
   render() {
-    console.log(localStorage.getItem("idToken"));
     return (
       <React.Fragment>
         <h1 className="title">Future of the study page.</h1>

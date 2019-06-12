@@ -1,23 +1,27 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-import NavBar from "./components/navbar";
-import Home from "./components/home";
-import Mission from "./components/mission";
-import About from "./components/about";
-import Contact from "./components/contact";
-import Study from "./components/study";
+import NavBar from "./navbar";
+import Home from "./home";
+import Mission from "./info-pages/mission";
+import About from "./info-pages/about";
+import Contact from "./info-pages/contact";
+import Study from "./study";
 import { Switch, Redirect } from "react-router-dom";
-import Auth from "./utilities/auth";
-import Callback from "./components/callback";
-import history from "./utilities/history";
-import "./sass/App.scss";
+import Auth from "../utilities/auth";
+import Callback from "./redirect-pages/callback";
+import history from "../utilities/history";
+import "../sass/App.scss";
+import NotFound from "./redirect-pages/notFound";
 const auth = new Auth();
 
 class App extends Component {
+  componentDidMount() {
+    // localStorage.clear();
+  }
   state = {
     subheadings: ["MISSION", "ABOUT", "CONTACT"],
-    imagePath: "../../logo.png"
+    imagePath: require("../images/logo.png")
   };
   handleAuthentication = async (nextState, replace) => {
     let so;
@@ -32,7 +36,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <section className="hero  is-fullheight">
+        <section className="hero is-fullheight">
           <div className="background" />
           <div className="hero-head">
             <NavBar
@@ -51,10 +55,13 @@ class App extends Component {
                   render={() => <Study idToken={auth.getIdToken()} />}
                 />
                 <Route path="/callback" component={Callback} />
+                <Route path="/not-found" component={NotFound} />
                 <Route
                   path="/"
+                  exact
                   render={props => <Home auth={auth} {...props} />}
                 />
+                <Redirect to="/not-found" />
               </Switch>
             </div>
           </div>
