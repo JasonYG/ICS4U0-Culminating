@@ -17,7 +17,12 @@ const auth = new Auth();
 
 class App extends Component {
   componentDidMount() {
-    // localStorage.clear();
+    const expiresAt = localStorage.getItem("expiresAt");
+
+    if (expiresAt < new Date().getTime()) {
+      localStorage.clear();
+      localStorage.setItem("isLoggedIn", "0");
+    }
   }
   state = {
     subheadings: ["MISSION", "ABOUT", "CONTACT"],
@@ -27,8 +32,6 @@ class App extends Component {
     let so;
     if (/access_token|id_token|error/.test(nextState.location.hash)) {
       auth.handleAuthentication().then(() => {
-        console.log("d");
-
         history.push(`/study/${auth.getIdToken()}`);
       });
     }

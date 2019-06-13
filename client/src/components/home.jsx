@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class Home extends Component {
   render() {
-    const isLoggedIn = true; //localStorage.getItem("isLoggedIn");
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
     return (
       <div className="home-div">
         <h1 className="title is-2">Create a study guide today.</h1>
@@ -12,8 +12,8 @@ class Home extends Component {
         </h2>
         <a
           className="button is-primary is-inverted is-outlined subtitle is-4"
-          disabled={isLoggedIn}
-          onClick={isLoggedIn ? null : this.props.auth.login}
+          disabled={isLoggedIn == "1"}
+          onClick={isLoggedIn == "1" ? null : this.props.auth.login}
         >
           Login
         </a>
