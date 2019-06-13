@@ -14,7 +14,8 @@ class Callback extends Component {
   };
   render() {
     // this.handleAuthentication();
-    if (this.state.idToken != null) return <Redirect to={`/`} />;
+    if (this.state.idToken != null)
+      return <Redirect to={`/study/${this.state.idToken}`} />;
     else return <h1>loading</h1>;
   }
 }

@@ -55,16 +55,12 @@ class App extends Component {
                 <Route path="/mission/" component={Mission} />
                 <Route path="/callback" component={Callback} />
                 <Route path="/not-found" component={NotFound} />
+                {isLoggedIn == "1" && <Redirect from="/" to="/study/" />}
+                <Route path="/study/" component={Study} />
                 <Route
                   path="/"
                   exact
-                  render={props =>
-                    isLoggedIn == "1" ? (
-                      <Study idToken={auth.getIdToken()} />
-                    ) : (
-                      <Home auth={auth} {...props} />
-                    )
-                  }
+                  render={props => <Home auth={auth} {...props} />}
                 />
                 <Redirect to="/not-found" />
               </Switch>

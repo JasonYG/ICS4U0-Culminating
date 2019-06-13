@@ -18,6 +18,7 @@ class Study extends Component {
     });
 
     const body = await test.json();
+    console.log(body);
   };
   render() {
     return (
