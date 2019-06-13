@@ -18,7 +18,6 @@ const auth = new Auth();
 class App extends Component {
   componentDidMount() {
     const expiresAt = localStorage.getItem("expiresAt");
-
     if (expiresAt < new Date().getTime()) {
       localStorage.clear();
       localStorage.setItem("isLoggedIn", "0");
@@ -37,6 +36,7 @@ class App extends Component {
     }
   };
   render() {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
     return (
       <div className="App">
         <section className="hero is-fullheight">
@@ -53,16 +53,18 @@ class App extends Component {
                 <Route path="/about/" component={About} />
                 <Route path="/contact/" component={Contact} />
                 <Route path="/mission/" component={Mission} />
-                <Route
-                  path="/study"
-                  render={() => <Study idToken={auth.getIdToken()} />}
-                />
                 <Route path="/callback" component={Callback} />
                 <Route path="/not-found" component={NotFound} />
                 <Route
                   path="/"
                   exact
-                  render={props => <Home auth={auth} {...props} />}
+                  render={props =>
+                    isLoggedIn == "1" ? (
+                      <Study idToken={auth.getIdToken()} />
+                    ) : (
+                      <Home auth={auth} {...props} />
+                    )
+                  }
                 />
                 <Redirect to="/not-found" />
               </Switch>

@@ -9,18 +9,12 @@ class Callback extends Component {
   }
 
   handleAuthentication = async (nextState, replace) => {
-    // if (/access_token|id_token|error/.test(nextState.location.hash)) {
     await auth.handleAuthentication();
     this.setState({ idToken: auth.getIdToken() });
-    // );
-    // console.log("i'm here");
-    // return <Link to={`/study/${auth.getIdToken()}`} />;
-    // }
   };
   render() {
     // this.handleAuthentication();
-    if (this.state.idToken != null)
-      return <Redirect to={`/study/${this.state.idToken}`} />;
+    if (this.state.idToken != null) return <Redirect to={`/`} />;
     else return <h1>loading</h1>;
   }
 }
