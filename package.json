@@ -1,23 +1,30 @@
 {
-  "name": "data-parsing",
+  "name": "ics4u0-culminating",
   "version": "1.0.0",
   "description": "This web application will create study guides. The idea is that a user inputs a topic they'd like to know more about, \r and the program will create a study guide with information from a variety of sources.",
-  "main": "main.js",
-  "dependencies": {
-    "request": "^2.88.0"
-  },
-  "devDependencies": {},
+  "main": "src/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/main.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "echo 'hello build'"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Aarish-A/ICS4U0-Culminating.git"
   },
-  "author": "Jason Guo",
+  "author": "Aarish Adeel",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Aarish-A/ICS4U0-Culminating/issues"
   },
-  "homepage": "https://github.com/Aarish-A/ICS4U0-Culminating#readme"
+  "homepage": "https://github.com/Aarish-A/ICS4U0-Culminating#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "jsonfile": "^5.0.0",
+    "puppeteer": "^1.15.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4",
+    "require": "^2.4.20",
+    "require-promise": "^1.0.1"
+  }
 }
