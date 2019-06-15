@@ -2,8 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const app = express();
-const login = require("./back-end/authentication");
-const jwtDecode = require("jwt-decode");
+const Authentication = require("./back-end/Authentication");
 
 app.use(bodyParser.json());
 
@@ -13,10 +12,9 @@ app.use(express.static(path.join(__dirname, "client/build")));
 
 app.post("/api/login", (req, res) => {
   const { idToken } = req.body;
-  const decodedJwt = jwtDecode(idToken);
-  console.log(decodedJwt);
-  login(decodedJwt.email);
+  const auth = new Authentication(idToken);
 
+  auth.login();
   res.send(req.body);
 });
 
