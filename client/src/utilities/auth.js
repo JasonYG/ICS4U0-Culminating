@@ -58,8 +58,6 @@ export default class Auth {
     localStorage.setItem("accessToken", this.accessToken);
     localStorage.setItem("idToken", this.idToken);
     localStorage.setItem("expiresAt", this.expiresAt);
-    // console.log(new Date(this.expiresAt) < new Date("June 5, 2019 10:56:00"));
-    //console.log(new Date().getTime());
   };
 
   renewSession = () => {

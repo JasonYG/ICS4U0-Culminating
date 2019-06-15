@@ -56,6 +56,7 @@ class App extends Component {
                 <Route path="/mission/" component={Mission} />
                 <Route path="/callback" component={Callback} />
                 <Route path="/not-found" component={NotFound} />
+                {isLoggedIn == "0" && <Redirect from="/study/" to="/" />}
                 <Route path="/study/" component={Study} />
                 {isLoggedIn == "1" && <Redirect from="/" to="/study/" />}
 
