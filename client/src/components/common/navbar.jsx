@@ -5,13 +5,13 @@ import Logo from "./logo";
 import Subheading from "./subheading";
 
 const NavBar = props => {
-  const { subheadings } = props;
+  const { subheadings, appTitle, logoComponent } = props;
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <Logo imagePath={props.imagePath} />
+        {logoComponent}
         <Link to="/" className="navbar-item">
-          Study4Life
+          {appTitle}
         </Link>
       </div>
       <div className="navbar-menu">

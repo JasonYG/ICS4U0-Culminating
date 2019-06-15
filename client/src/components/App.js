@@ -1,18 +1,23 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import "../sass/App.scss";
 
-import NavBar from "./navbar";
-import Home from "./home";
-import Mission from "./info-pages/mission";
+import React, { Component } from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
+
+import Auth from "../utilities/auth";
+
 import About from "./info-pages/about";
 import Contact from "./info-pages/contact";
+import Mission from "./info-pages/mission";
+
+import Logo from "./common/logo";
+import NavBar from "./common/navbar";
+
+import Home from "./home";
 import Study from "./study";
-import { Switch, Redirect } from "react-router-dom";
-import Auth from "../utilities/auth";
+
 import Callback from "./redirect-pages/callback";
-import history from "../utilities/history";
-import "../sass/App.scss";
 import NotFound from "./redirect-pages/notFound";
+
 const auth = new Auth();
 
 class App extends Component {
@@ -25,16 +30,10 @@ class App extends Component {
   }
   state = {
     subheadings: ["MISSION", "ABOUT", "CONTACT"],
-    imagePath: require("../images/logo.png")
+    imagePath: require("../images/logo.png"),
+    logoComponent: <Logo imagePath={require("../images/logo.png")} />
   };
-  handleAuthentication = async (nextState, replace) => {
-    let so;
-    if (/access_token|id_token|error/.test(nextState.location.hash)) {
-      auth.handleAuthentication().then(() => {
-        history.push(`/study/${auth.getIdToken()}`);
-      });
-    }
-  };
+
   render() {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
     return (
@@ -45,6 +44,8 @@ class App extends Component {
             <NavBar
               subheadings={this.state.subheadings}
               imagePath={this.state.imagePath}
+              appTitle={"Study4Life"}
+              logoComponent={this.state.logoComponent}
             />
           </div>
           <div className="hero-body">
@@ -55,8 +56,9 @@ class App extends Component {
                 <Route path="/mission/" component={Mission} />
                 <Route path="/callback" component={Callback} />
                 <Route path="/not-found" component={NotFound} />
-                {isLoggedIn == "1" && <Redirect from="/" to="/study/" />}
                 <Route path="/study/" component={Study} />
+                {isLoggedIn == "1" && <Redirect from="/" to="/study/" />}
+
                 <Route
                   path="/"
                   exact
