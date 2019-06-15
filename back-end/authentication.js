@@ -30,7 +30,7 @@ class Authentication {
       users.findOne({ email }, (err, user) => {
         if (err) throw err;
         if (user) {
-          users.update(user, { $set: { updateIsWorking: "true" } });
+          users.updateOne(user, { $set: { updateOneIsWorking: "true" } });
           return console.log(user);
         }
         users.insert({ email: email }, (err, inserted) => {
