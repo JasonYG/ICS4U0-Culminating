@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Auth from "../../utilities/auth";
 import { Redirect } from "react-router-dom";
+import Study from "../study";
 const auth = new Auth();
 class Callback extends Component {
   state = {};
@@ -13,9 +14,13 @@ class Callback extends Component {
     this.setState({ idToken: auth.getIdToken() });
   };
   render() {
-    // this.handleAuthentication();
     if (this.state.idToken != null)
-      return <Redirect to={`/study/${this.state.idToken}`} />;
+      return (
+        <React.Fragment>
+          <Study />
+          <Redirect to={`/study/`} />
+        </React.Fragment>
+      );
     else return <h1>loading</h1>;
   }
 }

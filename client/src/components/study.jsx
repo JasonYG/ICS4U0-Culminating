@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 
 class Study extends Component {
   componentDidMount() {
@@ -21,6 +22,10 @@ class Study extends Component {
     console.log(body);
   };
   render() {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    console.log("isLoggedIn ", isLoggedIn);
+    if (isLoggedIn == "0") return <Redirect to="/" />;
+
     return (
       <React.Fragment>
         <h1 className="title">Future of the study page.</h1>

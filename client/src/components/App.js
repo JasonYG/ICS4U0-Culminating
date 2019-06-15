@@ -27,15 +27,16 @@ class App extends Component {
       localStorage.clear();
       localStorage.setItem("isLoggedIn", "0");
     }
+    this.setState({ isLoggedIn: localStorage.getItem("isLoggedIn") });
   }
   state = {
     subheadings: ["MISSION", "ABOUT", "CONTACT"],
     imagePath: require("../images/logo.png"),
-    logoComponent: <Logo imagePath={require("../images/logo.png")} />
+    logoComponent: <Logo imagePath={require("../images/logo.png")} />,
+    isLoggedIn: localStorage.getItem("isLoggedIn")
   };
 
   render() {
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
     return (
       <div className="App">
         <section className="hero is-fullheight">
@@ -56,9 +57,11 @@ class App extends Component {
                 <Route path="/mission/" component={Mission} />
                 <Route path="/callback" component={Callback} />
                 <Route path="/not-found" component={NotFound} />
-                {isLoggedIn == "0" && <Redirect from="/study/" to="/" />}
                 <Route path="/study/" component={Study} />
-                {isLoggedIn == "1" && <Redirect from="/" to="/study/" />}
+
+                {this.state.isLoggedIn == "1" && (
+                  <Redirect from="/" to="/study/" />
+                )}
 
                 <Route
                   path="/"

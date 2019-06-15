@@ -4,6 +4,7 @@ import SignIn from "./common/signIn";
 class Home extends Component {
   handleAuth = () => this.props.auth.login();
   render() {
+    const isLoggedIn = 0;
     return (
       <div className="home-div">
         <h1 className="title is-2">Create a study guide today.</h1>
