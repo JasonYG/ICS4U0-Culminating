@@ -11,8 +11,7 @@ class Study extends Component {
     this.callApi();
   }
   callApi = async () => {
-    const response = await fetch("/api/test");
-    const test = await fetch("/api/login", {
+    const getStudyGuides = await fetch("/api/login", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -23,7 +22,7 @@ class Study extends Component {
       })
     });
 
-    const body = await test.json();
+    const body = await getStudyGuides.json();
     this.setState({ studyGuides: body.studyGuides ? body.studyGuides : [] });
     console.log(body);
   };

@@ -23,7 +23,9 @@ class Dropdown extends Component {
 
     const body = await getStudyGuides.json();
     this.setState({
-      studyGuides: body.studyGuides ? body.studyGuides : []
+      studyGuides: body.studyGuides
+        ? body.studyGuides
+        : [{ name: "Animal" }, { name: "Math" }]
     });
     console.log(body);
   };
@@ -59,13 +61,15 @@ class Dropdown extends Component {
                   />
                 </span>
               </div>
-              {this.state.showDropDown && (
-                <GuideLink
-                  styling="dropdown-content container"
-                  handleGuideSelect={null}
-                  name={"Animal"}
-                />
-              )}
+              {this.state.showDropDown &&
+                this.state.studyGuides.map(guide => (
+                  <GuideLink
+                    key={guide.name}
+                    styling="dropdown-content container"
+                    handleGuideSelect={null}
+                    name={guide.name}
+                  />
+                ))}
               <div className="column is-one-third" />
             </div>
           </div>
