@@ -5,9 +5,10 @@ const json = require('jsonfile');
 let Topic = require('./Topic')
 
 async function main() {
-  let topic = new Topic("Cryogenics", 20);
-  await topic.getInformation().catch(err => console.error(err));
-  await topic.writeToFile('data.json').catch(err => console.error(err));
+  const topic = new Topic("Animal", 5, 3);
+  const data = await topic.getInformation().catch(err => console.error(err));
+  json.writeFile('data.json', data);
+  // await topic.writeToFile('data.json').catch(err => console.error(err));
 }
 
 main();
