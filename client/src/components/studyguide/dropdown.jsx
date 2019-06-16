@@ -1,8 +1,31 @@
 import React, { Component } from "react";
+import GuideLink from "../common/guideLink";
 
 class Dropdown extends Component {
   state = {
-    showDropDown: false
+    showDropDown: false,
+    studyGuides: []
+  };
+  componentDidMount() {
+    this.callApi();
+  }
+  callApi = async () => {
+    const getStudyGuides = await fetch("/api/login", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        idToken: localStorage.getItem("idToken")
+      })
+    });
+
+    const body = await getStudyGuides.json();
+    this.setState({
+      studyGuides: body.studyGuides ? body.studyGuides : []
+    });
+    console.log(body);
   };
   handleDropdown = () => {
     const showDropDown = !this.state.showDropDown;
@@ -17,7 +40,13 @@ class Dropdown extends Component {
         <div className="column is-one-third dropdown has-text-centered">
           <div className="columns">
             <div className="column is-two-thirds">
-              <div className={buttonClass} onClick={this.handleDropdown}>
+              <div
+                className={buttonClass}
+                disabled={this.state.studyGuides.length === 0}
+                onClick={
+                  this.state.studyGuides.length > 0 ? this.handleDropdown : null
+                }
+              >
                 <span>Saved Study Guides</span>
                 <span className="icon is-small">
                   <i
@@ -31,9 +60,11 @@ class Dropdown extends Component {
                 </span>
               </div>
               {this.state.showDropDown && (
-                <React.Fragment>
-                  <h2 className="dropdown-content container">Animals</h2>
-                </React.Fragment>
+                <GuideLink
+                  styling="dropdown-content container"
+                  handleGuideSelect={null}
+                  name={"Animal"}
+                />
               )}
               <div className="column is-one-third" />
             </div>
