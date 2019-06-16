@@ -11,6 +11,7 @@ $table-background-color: transparent;
 
 $family-primary: "Lato", sans-serif;
 @import "../../node_modules/bulma/bulma.sass";
+@import "../../node_modules/bulma-slider/src/sass/index.sass";
 .navbar {
   background: transparent;
 }
@@ -74,4 +75,9 @@ a.navbar-item,
 }
 .main-column {
   padding-top: 10rem;
+}
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem !important;
+  margin-top: 0.5rem !important;
 }
