@@ -7,9 +7,13 @@ $navbar-tab-hover-border-bottom-color: white;
 $title-color: white;
 $subtitle-color: white;
 
+$table-background-color: transparent;
+
 $family-primary: "Lato", sans-serif;
 @import "../../node_modules/bulma/bulma.sass";
-
+.navbar {
+  background: transparent;
+}
 .navbar-item {
   padding: 0.5rem 2rem;
   font-size: 1.25rem;
@@ -44,4 +48,10 @@ a.navbar-item,
 .button {
   width: 10rem;
   margin: auto;
+}
+.topic-input {
+  margin-top: 1rem;
+}
+.column {
+  padding-top: 10rem;
 }
