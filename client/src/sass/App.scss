@@ -46,7 +46,6 @@ a.navbar-item,
   flex-direction: column;
 }
 .button {
-  width: 10rem;
   margin: auto;
 }
 .topic-input {
@@ -54,4 +53,15 @@ a.navbar-item,
 }
 .column {
   padding-top: 10rem;
+}
+.button.is-link.is-inverted.is-outlined.is-active {
+  background-color: #fff;
+  color: #3273dc;
+}
+.dropdown-content {
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid;
+  border-color: #fff;
+  margin-top: 0.5rem;
 }
