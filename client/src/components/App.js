@@ -52,7 +52,7 @@ class App extends Component {
         </div>
         <div className="columns">
           <Route path="/study/" component={Dropdown} />
-          <div className="container has-text-centered column is-one-third">
+          <div className="container has-text-centered column is-one-third main-column">
             <Switch>
               <Route path="/about/" component={About} />
               <Route path="/contact/" component={Contact} />
