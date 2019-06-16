@@ -23,9 +23,7 @@ class Dropdown extends Component {
 
     const body = await getStudyGuides.json();
     this.setState({
-      studyGuides: body.studyGuides
-        ? body.studyGuides
-        : [{ name: "Animal" }, { name: "Math" }]
+      studyGuides: body.studyGuides ? body.studyGuides : []
     });
     console.log(body);
   };
