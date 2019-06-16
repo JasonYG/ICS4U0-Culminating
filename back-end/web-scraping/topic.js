@@ -30,105 +30,109 @@ class Topic {
    * @return {string, string} an array of objects containing the subtopic/information pairs
    */
   async getInformation() {
-    return new Promise(async (resolve, reject) => {
-      // Regular expression to find potential subtopics based on hyperlinks in the HTML tags
-      const subtopicRegExp = /(?<=title=")(.*?)(?=\">)/g;
-      // Regular expression to find and filter out references from paragraph elements
-      const referenceRegExp = /\[(.*?)\]/g;
+    // Regular expression to find potential subtopics based on hyperlinks in the HTML tags
+    const subtopicRegExp = /(?<=title=")(.*?)(?=\">)/g;
+    // Regular expression to find and filter out references from paragraph elements
+    const referenceRegExp = /\[(.*?)\]/g;
 
-      // Get HTML source from website
-      const url = `https://en.wikipedia.org/wiki/${this._title}`;
-      const html = await rp(url, { timeout: 10000 });
-      const $ = await cheerio.load(html);
+    // Get HTML source from website
+    const url = `https://en.wikipedia.org/wiki/${this._title}`;
+    const html = await rp(url, { timeout: 10000 });
+    const $ = await cheerio.load(html);
 
-      // Get raw HTML from paragraph elements
-      $("h2 .mw-headline").each(async (i, elem) => {
-        const id = $(elem).attr("id");
-        if (
-          id === "See_also" ||
-          id == "Notes" ||
-          id === "Further_reading" ||
-          id === "References"
-        )
-          return false;
+    // Get raw HTML from paragraph elements
+    await Promise.all(
+      $("h2 .mw-headline").map(
+        async (i, elem) =>
+          new Promise(async (res, rej) => {
+            const id = $(elem).attr("id");
+            if (
+              id === "See_also" ||
+              id == "Notes" ||
+              id === "Further_reading" ||
+              id === "References"
+            )
+              res(false);
 
-        const term = $(elem)
-          .attr("id")
-          .replace(/_/g, " ");
-        const info = $(elem)
-          .parent()
-          .nextUntil("h2 .mw-headline", "p")
-          .text()
-          .trim()
-          .replace(referenceRegExp, "");
+            const term = $(elem)
+              .attr("id")
+              .replace(/_/g, " ");
+            const info = $(elem)
+              .parent()
+              .nextUntil("h2 .mw-headline", "p")
+              .text()
+              .trim()
+              .replace(referenceRegExp, "");
 
-        let summary = new Summarizer();
-        summary.text = info;
-        await summary.callApi();
-        const summarizedInfo = summary.summary;
+            let summary = new Summarizer();
+            summary.text = info;
+            console.log("h");
+            await summary.callApi();
+            const summarizedInfo = summary.summary;
 
-        this._topicInfo.push({
-          term: term,
-          info: summarizedInfo,
-          subtopics: []
-        });
-      });
+            this._topicInfo.push({
+              term: term,
+              info: info,
+              subtopics: []
+            });
+          })
+      )
+    );
 
-      $("p").each((i, elem) => {
-        const foundSubtopics = $(elem)
-          .html()
-          .match(subtopicRegExp);
-        if (
-          foundSubtopics != null &&
-          typeof foundSubtopics[Symbol.iterator] === "function"
-        ) {
-          try {
-            for (const s of foundSubtopics) {
-              this._subtopics[s] = 1;
-            }
-          } catch (err) {
-            reject(err);
+    $("p").each((i, elem) => {
+      const foundSubtopics = $(elem)
+        .html()
+        .match(subtopicRegExp);
+      if (
+        foundSubtopics != null &&
+        typeof foundSubtopics[Symbol.iterator] === "function"
+      ) {
+        try {
+          for (const s of foundSubtopics) {
+            this._subtopics[s] = 1;
           }
+        } catch (err) {
+          console.error(err);
         }
-      });
-
-      $("p").each((i, elem) => {
-        const text = $(elem).text();
-        for (const s in this._subtopics) {
-          const regExp = new RegExp(s, "g");
-          const sCount = (text.match(regExp) || []).length;
-          if (sCount) {
-            this._subtopics[s] += sCount;
-          }
-        }
-      });
-
-      this.sortTopics();
-
-      console.log("running here");
-
-      if (this._depth > 0) {
-        for (let i = 0; i < this._breadth; i++) {
-          if (i > this._topicInfo.length) continue;
-          const newTopic = new Topic(
-            this._topicInfo[i].term,
-            this._breadth,
-            this._depth - 1
-          );
-          const newInfo = await newTopic
-            .getInformation()
-            .then(() => console.log("got info"))
-            .catch(err => reject(err));
-          this._topicInfo[i].subtopics.push(newInfo);
-          // this._topicInfo[i]['subtopics'].push(Math.random() * 10);
-        }
-      }git st
-      console.log("return");
-      resolve({
-        topic: this._title,
-        content: this._topicInfo
-      });
+      }
     });
+
+    $("p").each((i, elem) => {
+      const text = $(elem).text();
+      for (const s in this._subtopics) {
+        const regExp = new RegExp(s, "g");
+        const sCount = (text.match(regExp) || []).length;
+        if (sCount) {
+          this._subtopics[s] += sCount;
+        }
+      }
+    });
+
+    this.sortTopics();
+
+    console.log("running here");
+
+    if (this._depth > 0) {
+      for (let i = 0; i < this._breadth; i++) {
+        if (i > this._topicInfo.length) continue;
+        const newTopic = new Topic(
+          this._topicInfo[i].term,
+          this._breadth,
+          this._depth - 1
+        );
+        const newInfo = await newTopic
+          .getInformation()
+          .then(() => console.log("got info"))
+          .catch(err => console.error(err));
+        res(this._topicInfo[i].subtopics.push(newInfo));
+        // this._topicInfo[i]['subtopics'].push(Math.random() * 10);
+      }
+    }
+    console.log("return");
+    return {
+      topic: this._title,
+      content: this._topicInfo
+    };
 
     // if (this._depth == 0) {
     //   console.log("Exit condition");

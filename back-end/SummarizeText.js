@@ -1,7 +1,6 @@
 let ParseText = require("./ParseText");
 let request = require("request");
 // const config = require("./config.json");
-const util = require("util");
 const requestPromise = config =>
   new Promise((resolve, reject) => {
     request(config, (err, res, body) => {
@@ -46,49 +45,51 @@ class SummarizeText extends ParseText {
    * @returns {object} - The SMMRY API's return JSON
    */
   async callApi() {
-    //API request parameters
-    const PARAMETERS = {
-      SM_API_KEY: "4C039A6343", //TODO: Remove API from source code
-      SM_URL:
-        "https://www.theguardian.com/world/2019/mar/07/north-korea-film-focuses-on-kim-jong-un-donald-trump-relationship-not-hanoi-summit-breakdown"
-      // SM_LENGTH=N	 ,
-      // SM_KEYWORD_COUNT=N,
-      // SM_WITH_ENCODE: "",
-      // SM_WITH_BREAK: "",
-      // SM_IGNORE_LENGTH: "",
-      // SM_QUOTE_AVOID: "",
-      // SM_QUESTION_AVOID: "",
-      // SM_EXCLAMATION_AVOID: "",
-    };
+    return new Promise(async (resolve, reject) => {
+      //API request parameters
+      const PARAMETERS = {
+        SM_API_KEY: "4C039A6343", //TODO: Remove API from source code
+        SM_URL:
+          "https://www.theguardian.com/world/2019/mar/07/north-korea-film-focuses-on-kim-jong-un-donald-trump-relationship-not-hanoi-summit-breakdown"
+        // SM_LENGTH=N	 ,
+        // SM_KEYWORD_COUNT=N,
+        // SM_WITH_ENCODE: "",
+        // SM_WITH_BREAK: "",
+        // SM_IGNORE_LENGTH: "",
+        // SM_QUOTE_AVOID: "",
+        // SM_QUESTION_AVOID: "",
+        // SM_EXCLAMATION_AVOID: "",
+      };
 
-    //Build URL with appropriate parameters
-    const URL_REQUEST = Object.keys(PARAMETERS).reduce(
-      (acc, val) => `${acc}&${val}=${PARAMETERS[val]}`,
-      "https://api.smmry.com?"
-    );
+      //Build URL with appropriate parameters
+      const URL_REQUEST = Object.keys(PARAMETERS).reduce(
+        (acc, val) => `${acc}&${val}=${PARAMETERS[val]}`,
+        "https://api.smmry.com?"
+      );
 
-    //TODO: write the logic to call the API
-    // const URL = 'https://api.smmry.com';
-    let config = {
-      method: "POST",
-      url: URL_REQUEST,
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Expect: ""
-      },
-      form: {
-        sm_api_input: this.text
-      },
-      json: true
-    };
+      //TODO: write the logic to call the API
+      // const URL = 'https://api.smmry.com';
+      let config = {
+        method: "POST",
+        url: URL_REQUEST,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Expect: ""
+        },
+        form: {
+          sm_api_input: this.text
+        },
+        json: true
+      };
 
-    let body;
-    try {
-      body = await requestPromise(config);
-      this.updateSummary(body);
-    } catch (e) {
-      console.error(e);
-    }
+      let body;
+      try {
+        body = await requestPromise(config);
+        resolve(this.updateSummary(body));
+      } catch (e) {
+        reject(console.error(e));
+      }
+    });
   }
 
   /**
