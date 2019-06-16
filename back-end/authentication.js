@@ -7,11 +7,11 @@ const jwtDecode = require("jwt-decode");
  */
 class Authentication {
   /**
-   * Constructor function that creates an Authentication object
+   * Setter method that adds the user's email
    *
-   * @param {string} jwtIdToken The JSON web token that contains user information
+   * @param {string} jwtIdToken - The id token that contains user information
    */
-  constructor(jwtIdToken) {
+  set email(jwtIdToken) {
     const decodedToken = jwtDecode(jwtIdToken);
     this.userEmail = decodedToken.email;
   }
@@ -40,6 +40,26 @@ class Authentication {
               if (inserted) console.log("Successfully added user!");
             });
           }
+        });
+      })
+    );
+  }
+  /**
+   * Gets the user's study guides
+   */
+  getStudyGuides() {
+    const email = this.userEmail;
+    const MongoClient = require("mongodb").MongoClient;
+    const uri =
+      "mongodb+srv://studyguide:raaghavisgay@cluster0-pitl1.mongodb.net/test?retryWrites=true&w=majority";
+    return new Promise((resolve, reject) =>
+      MongoClient.connect(uri, { useNewUrlParser: true }, (err, client) => {
+        const db = client.db("studyguide");
+        const users = db.collection("users");
+        users.findOne({ email }, (err, user) => {
+          if (err) reject(err);
+          if (user) resolve(user.studyGuides);
+          else reject("User not found");
         });
       })
     );
