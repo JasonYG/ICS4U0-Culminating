@@ -18,7 +18,7 @@ import Dropdown from "./studyguide/dropdown";
 const auth = new Auth();
 
 class MainContent extends Component {
-  state = {};
+  state = { isLoggedIn: localStorage.getItem("isLoggedIn") };
   render() {
     return (
       <div className="columns">

@@ -20,8 +20,7 @@ class App extends Component {
   state = {
     subheadings: ["MISSION", "ABOUT", "CONTACT"],
     imagePath: require("../images/logo.png"),
-    logoComponent: <Logo imagePath={require("../images/logo.png")} />,
-    isLoggedIn: localStorage.getItem("isLoggedIn")
+    logoComponent: <Logo imagePath={require("../images/logo.png")} />
   };
 
   render() {
