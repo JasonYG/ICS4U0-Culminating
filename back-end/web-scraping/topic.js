@@ -75,6 +75,7 @@ class Topic {
               info: info,
               subtopics: []
             });
+            return res(true);
           })
       )
     );
