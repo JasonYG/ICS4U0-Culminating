@@ -6,14 +6,14 @@ class Home extends Component {
   render() {
     const isLoggedIn = 0;
     return (
-      <div className="home-div">
-        <h1 className="title is-2">Create a study guide today.</h1>
-        <h2 className="subtitle is-4">
+      <React.Fragment>
+        <h1 className="title">Create a study guide today.</h1>
+        <h2 className="subtitle">
           Choose any topic, and we'll combine information from a variety of
           sources into a succinct study guide
         </h2>
         <SignIn onClick={this.handleAuth} />
-      </div>
+      </React.Fragment>
     );
   }
 }
