@@ -4,6 +4,7 @@ const path = require("path");
 const app = express();
 
 const Authentication = require("./back-end/authentication");
+const Topic = require("./back-end/web-scraping/topic");
 
 const auth = new Authentication();
 
@@ -28,11 +29,13 @@ app.post("/api/get-study-guides", async (req, res) => {
   res.send(auth.getStudyGuides());
 });
 
-app.post("/api/search-term", (req, res) => {
-  const { term } = req.body;
+app.post("/api/search-term", async (req, res) => {
+  const { term, breadthValue, depthValue } = req.body;
   console.log(req.body);
-  //Search term
-  res.send({ term });
+  const WebScraper = new Topic(term, breadthValue, depthValue);
+  const studyGuide = await WebScraper.getInformation();
+  console.log(studyGuide);
+  res.send(studyGuide);
 });
 
 app.get("*", (req, res) => {

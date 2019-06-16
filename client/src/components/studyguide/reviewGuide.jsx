@@ -6,6 +6,12 @@ class ReviewGuide extends Component {
     this.callApi();
   }
   callApi = async () => {
+    const {
+      breadthValue,
+      depthValue,
+      organization,
+      topic
+    } = this.props.match.params;
     const getGuide = await fetch("/api/search-term", {
       method: "POST",
       headers: {
@@ -13,7 +19,10 @@ class ReviewGuide extends Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        term: this.state.topic
+        term: topic,
+        breadthValue: breadthValue,
+        depthValue: depthValue,
+        organization: organization
       })
     });
     const body = await getGuide.json();
@@ -21,9 +30,7 @@ class ReviewGuide extends Component {
     this.setState({ finishLoading: true });
   };
   render() {
-    if (this.state.finishLoading != null)
-      // return <Redirect to="/study/review-guide" />;
-      console.log(this.props);
+    if (this.state.finishLoading != null) console.log(this.props);
     return (
       <React.Fragment>
         <Loading />

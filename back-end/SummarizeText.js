@@ -24,7 +24,7 @@ class SummarizeText extends ParseText {
    */
   constructor(numberOfSentences, apiKey) {
     super();
-    this.numberOfSentences = numberOfSentences || 7;
+    this.numberOfSentences = numberOfSentences || 2;
     this.apiKey = "4C039A6343";
     this.summarizedText = "";
   }
