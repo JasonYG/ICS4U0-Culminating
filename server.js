@@ -10,12 +10,19 @@ app.get("/api/test", (req, res) => res.send({ Hello: "world" }));
 
 app.use(express.static(path.join(__dirname, "client/build")));
 
-app.post("/api/login", (req, res) => {
+app.post("/api/login", async (req, res) => {
   const { idToken } = req.body;
   const auth = new Authentication(idToken);
+  const user = await auth.login();
+  console.log(user);
 
-  auth.login();
-  res.send(req.body);
+  res.send(user);
+});
+app.post("/api/search-term", (req, res) => {
+  const { term } = req.body;
+  console.log(req.body);
+  //Search term
+  res.send({ term });
 });
 
 app.get("*", (req, res) => {
