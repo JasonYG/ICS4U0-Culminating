@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import Form from "./common/form";
 
 class Study extends Component {
   state = {
@@ -64,20 +65,12 @@ class Study extends Component {
         ) : (
           <h2 className="subtitle">You have no study guides created!</h2>
         )}
-        <form onSubmit={this.handleSubmit}>
-          <div className="field">
-            <label htmlFor="" className="subtitle">
-              Enter a topic
-            </label>
-            <input
-              type="text"
-              placeholder="subject"
-              value={this.state.topic}
-              className="input topic-input"
-              onChange={this.handleChange}
-            />
-          </div>
-        </form>
+        <Form
+          raiseSubmit={this.handleSubmit}
+          raiseChange={this.handleChange}
+          topic={this.state.topic}
+          label="Enter a topic"
+        />
       </React.Fragment>
     );
   }
