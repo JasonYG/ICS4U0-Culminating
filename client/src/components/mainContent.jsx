@@ -32,7 +32,9 @@ class MainContent extends Component {
             <Route path="/not-found" component={NotFound} />
             <Route path="/study/" component={Study} />
 
-            {this.state.isLoggedIn == "1" && <Redirect from="/" to="/study/" />}
+            {this.state.isLoggedIn === "1" && (
+              <Redirect from="/" to="/study/" />
+            )}
 
             <Route
               path="/"
