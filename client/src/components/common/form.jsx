@@ -1,18 +1,5 @@
 import React, { Component } from "react";
 class Form extends Component {
-  //   const getTerm = await fetch("/api/search-term", {
-  //     method: "POST",
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json"
-  //     },
-  //     body: JSON.stringify({
-  //       term: this.state.topic
-  //     })
-  //   });
-  //   const body = await getTerm.json();
-  //   console.log(body);
-  // };
   invalidTopic = () => {
     return (
       <React.Fragment>

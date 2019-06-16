@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Redirect, Switch, Route } from "react-router-dom";
 import Form from "./common/form";
-import Loading from "./studyguide/loading";
+import Loading from "./studyguide/reviewGuide";
 
 class Study extends Component {
   state = {
@@ -64,16 +64,18 @@ class Study extends Component {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
     console.log("isLoggedIn ", isLoggedIn);
     if (isLoggedIn === "0") return <Redirect to="/" />;
-    if (this.state.redirect)
+    if (this.state.redirect) {
+      localStorage.setItem("creatingGuide", "true");
       return (
         <React.Fragment>
           <Redirect
-            to={`/study/loading/${this.state.topic}/${
-              this.state.organization
-            }/${this.state.breadthValue}/${this.state.depthValue}`}
+            to={`/study/review/${this.state.topic}/${this.state.organization}/${
+              this.state.breadthValue
+            }/${this.state.depthValue}`}
           />
         </React.Fragment>
       );
+    }
     return (
       <React.Fragment>
         <h1 className="title">Welcome to Study4Life</h1>

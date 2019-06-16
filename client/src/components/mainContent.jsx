@@ -14,12 +14,15 @@ import Study from "./study";
 import Callback from "./redirect-pages/callback";
 import NotFound from "./redirect-pages/notFound";
 import Dropdown from "./studyguide/dropdown";
-import Loading from "./studyguide/loading";
+import ReviewGuide from "./studyguide/reviewGuide";
 
 const auth = new Auth();
 
 class MainContent extends Component {
-  state = { isLoggedIn: localStorage.getItem("isLoggedIn") };
+  state = {
+    isLoggedIn: localStorage.getItem("isLoggedIn"),
+    creatingGuide: localStorage.getItem("creatingGuide") || false
+  };
   render() {
     return (
       <div className="columns">
@@ -32,8 +35,8 @@ class MainContent extends Component {
             <Route path="/callback" component={Callback} />
             <Route path="/not-found" component={NotFound} />
             <Route
-              path="/study/loading/:topic/:organization/:breadthValue/:depthValue"
-              component={Loading}
+              path="/study/review/:topic/:organization/:breadthValue/:depthValue"
+              component={ReviewGuide}
             />
             <Route path="/study/" component={Study} />
 
@@ -49,7 +52,7 @@ class MainContent extends Component {
             <Redirect to="/not-found" />
           </Switch>
         </div>
-        <Route path="/study/" render={() => <div className="column" />} />
+        <Route exact path="/study/" render={() => <div className="column" />} />
       </div>
     );
   }
