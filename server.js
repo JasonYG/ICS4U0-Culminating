@@ -5,6 +5,8 @@ const app = express();
 
 const Authentication = require("./back-end/authentication");
 
+const auth = new Authentication();
+
 app.use(bodyParser.json());
 
 app.get("/api/test", (req, res) => res.send({ Hello: "world" }));
@@ -13,12 +15,19 @@ app.use(express.static(path.join(__dirname, "client/build")));
 
 app.post("/api/login", async (req, res) => {
   const { idToken } = req.body;
-  const auth = new Authentication(idToken);
+  auth.email = idToken;
   const user = await auth.login();
   console.log(user);
 
   res.send(user);
 });
+
+app.post("/api/get-study-guides", async (req, res) => {
+  const { idToken } = req.body;
+  auth.email = idToken;
+  res.send(auth.getStudyGuides());
+});
+
 app.post("/api/search-term", (req, res) => {
   const { term } = req.body;
   console.log(req.body);
