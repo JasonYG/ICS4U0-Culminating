@@ -51,9 +51,6 @@ a.navbar-item,
 .topic-input {
   margin-top: 1rem;
 }
-.column {
-  padding-top: 10rem;
-}
 .button.is-link.is-inverted.is-outlined.is-active {
   background-color: #fff;
   color: #3273dc;
@@ -64,4 +61,8 @@ a.navbar-item,
   border: 1px solid;
   border-color: #fff;
   margin-top: 0.5rem;
+  width: 30vh;
+}
+.main-column {
+  padding-top: 10rem;
 }
