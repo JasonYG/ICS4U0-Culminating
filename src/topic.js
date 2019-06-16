@@ -1,6 +1,7 @@
 const rp = require('request-promise');
 const cheerio = require('cheerio');
 const json = require('jsonfile');
+const Summarizer = require('../SummarizeText.js');
 
 /**
  * This is the class used to create topic objects
@@ -47,9 +48,16 @@ class Topic {
 
       const term = $(elem).attr('id').replace(/_/g, ' ');
       const info = $(elem).parent().nextUntil("h2 .mw-headline", 'p').text().trim().replace(referenceRegExp, "");
+
+      let summary = new Summarizer();
+      summary.text = info;
+      summary.callApi();
+      const summarizedInfo = summary.summary;
+
       this._topicInfo.push({
-        "Term": term,
-        "Info": info
+        term: term,
+        info: info,
+        subtopics: []
       })
     });
 
@@ -79,23 +87,40 @@ class Topic {
 
     this.sortTopics();
 
-    if (this._depth == 0) {
-      console.log("Exit condition");
-      return this._topicInfo;
-    } else {
+    console.log("running here");
+
+    if (this._depth > 0) {
       for (let i = 0; i < this._breadth; i++) {
-        console.log("Recursioning");
-        if (this._subtopics[i][0] == this._title) {
-          i++;
-          this._breadth++;
-        }
-        let newTopic = new Topic(this._subtopics[i][0], this._depth - 1);
-        return {
-          ...this._topicInfo,
-          "Subtopics": await newTopic.getInformation().catch(err => console.error(err))
-        };
+        if (i > this._topicInfo.length) continue;
+        const newTopic = new Topic(this._topicInfo[i].term, this._breadth, this._depth - 1);
+        const newInfo = await newTopic.getInformation().catch(err => console.error(err));
+        this._topicInfo[i].subtopics.push(newInfo);
+        // this._topicInfo[i]['subtopics'].push(Math.random() * 10);
       }
     }
+
+    return {
+      topic: this._title,
+      content: this._topicInfo
+    }
+
+    // if (this._depth == 0) {
+    //   console.log("Exit condition");
+    //   return this._topicInfo;
+    // } else {
+    //   for (let i = 0; i < this._breadth; i++) {
+    //     console.log("Recursioning");
+    //     if (this._subtopics[i][0] == this._title) {
+    //       i++;
+    //       this._breadth++;
+    //     }
+    //     let newTopic = new Topic(this._subtopics[i][0], this._depth - 1);
+    //     return {
+    //       ...this._topicInfo,
+    //       "Subtopics": await newTopic.getInformation().catch(err => console.error(err))
+    //     };
+    //   }
+    // }
     console.log("Finished");
   }
 
