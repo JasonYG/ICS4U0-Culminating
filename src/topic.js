@@ -15,12 +15,13 @@ class Topic {
    * @param {string} title the title for this topic
    * @param {number} depth the depth of this topic that the user would like to obtain
    */
-  Topic(title, depth) {
+  constructor(title, breadth, depth) {
     this._title = title;
+    this._breadth = breadth;
     this._depth = depth;
-    this._information = new Array();
-    this._topics = new Array();
-    this._formattedData = {};
+    this._information = [];
+    this._subtopics = [];
+    this._topicInfo = [];
   }
 
   /**
@@ -29,71 +30,73 @@ class Topic {
    */
   async getInformation() {
     // Regular expression to find potential subtopics based on hyperlinks in the HTML tags
-    const subtopicRegExp = new RegExp('(?<=title=")(.*?)(?=\">)', 'g');
+    const subtopicRegExp = /(?<=title=")(.*?)(?=\">)/g;
     // Regular expression to find and filter out references from paragraph elements
-    const referenceRegExp = new RegExp('(?<=[)(.*?)(?=\])', 'g');
+    const referenceRegExp = /\[(.*?)\]/g;
 
     // Get HTML source from website
     const url = `https://en.wikipedia.org/wiki/${this._title}`;
-    const html = await rp(url);
-    const page = await cheerio.load(html);
+    const html = await rp(url, {timeout: 10000});
+    const $ = await cheerio.load(html);
 
     // Get raw HTML from paragraph elements
-    const tags = page('p').map((i, elem) => {
-      return page(this).html();
-    }).get();
+    $("h2 .mw-headline").each((i, elem) => {
+      const id = $(elem).attr('id');
+      if (id === 'See_also' || id == 'Notes' || id === 'Further_reading' || id === 'References')
+        return false;
 
-    let subtopics = [];
+      const term = $(elem).attr('id').replace(/_/g, ' ');
+      const info = $(elem).parent().nextUntil("h2 .mw-headline", 'p').text().trim().replace(referenceRegExp, "");
+      this._topicInfo.push({
+        "Term": term,
+        "Info": info
+      })
+    });
 
-    for (const tag of tags) {
-      let temp = tag.match(subtopicRegExp);
-      if (temp != null) {
-        for (const t of temp) {
-          if (subtopics[t]) {
-            subtopics[t] += 1;
-          } else {
-            subtopics[t]
-            subtopics[t] = 1;
+    $('p').each((i, elem) => {
+      const foundSubtopics = $(elem).html().match(subtopicRegExp);
+      if (foundSubtopics != null && typeof foundSubtopics[Symbol.iterator] === 'function') {
+        try {
+          for (const s of foundSubtopics) {
+            this._subtopics[s] = 1;
           }
+        } catch(err) {
+          console.error(err);
         }
       }
-    }
+    });
 
-    // Get raw text from paragraph elements
-    const paragraphs = page('p').map((i, elem) => {
-      return page(this).text();
-    }).get();
-
-    for (let i = 0; i < paragraphs.length; i++) {
-      paragraphs[i] = paragraphs[i].replace(referenceRegExp, '');
-      if (paragraphs[i].length > 1) {
-        this._information.push(paragraphs[i]);
+    $('p').each((i, elem) => {
+      const text = $(elem).text();
+      for (const s in this._subtopics) {
+        const regExp = new RegExp(s, 'g');
+        const sCount = (text.match(regExp) || []).length;
+        if (sCount) {
+          this._subtopics[s] += sCount;
+        }
       }
-    }
+    });
 
-    this._topics = this._topics.concat(subtopics);
     this.sortTopics();
 
-    let package = [];
-    for (let i = 0; i < topics.length; i++) {
-      package.push({
-        'topic': this._topics[i],
-        'information': this._information[i]
-      })
-    }
-
-    if (this._depth = 0) {
-      this._formattedData = package;
-      return this._formattedData;;
+    if (this._depth == 0) {
+      console.log("Exit condition");
+      return this._topicInfo;
     } else {
-      let packagePlus = [];
-      for (let i = 0; i < this._depth; i++) {
-        let st = new Topic(package[i].topic, this._depth - 1);
-        packagePlus.concat(st.getInformation());
+      for (let i = 0; i < this._breadth; i++) {
+        console.log("Recursioning");
+        if (this._subtopics[i][0] == this._title) {
+          i++;
+          this._breadth++;
+        }
+        let newTopic = new Topic(this._subtopics[i][0], this._depth - 1);
+        return {
+          ...this._topicInfo,
+          "Subtopics": await newTopic.getInformation().catch(err => console.error(err))
+        };
       }
-      this._formattedData = package.concat(packagePlus);
-      return this._formattedData;;
     }
+    console.log("Finished");
   }
 
 
@@ -130,18 +133,13 @@ class Topic {
         }
       }
     } else if (type == 'default') {
-      let topics = Object.keys(this._topics);
-      let i, length = topics.length;
-      topics.sort();
-      let sortedTopics = [];
-      for (i = 0; i < len; i++) {
-        let t = topics[i];
-        sortedTopics.push({
-          'topic': t,
-          'value':this._topics[t]
-        });
-      }
-      this._topics = sortedTopics;
+      let items = Object.keys(this._subtopics).map((key) => {
+        return [key, this._subtopics[key]];
+      });
+      items.sort((a, b) => {
+        return b[1] - a[1];
+      });
+      this._subtopics = items;
     }
   }
 
