@@ -14,6 +14,7 @@ import Study from "./study";
 import Callback from "./redirect-pages/callback";
 import NotFound from "./redirect-pages/notFound";
 import Dropdown from "./studyguide/dropdown";
+import Loading from "./studyguide/loading";
 
 const auth = new Auth();
 
@@ -22,7 +23,7 @@ class MainContent extends Component {
   render() {
     return (
       <div className="columns">
-        <Route path="/study/" component={Dropdown} />
+        <Route exact path="/study/" component={Dropdown} />
         <div className="container has-text-centered column is-one-third main-column">
           <Switch>
             <Route path="/about/" component={About} />
@@ -30,6 +31,10 @@ class MainContent extends Component {
             <Route path="/mission/" component={Mission} />
             <Route path="/callback" component={Callback} />
             <Route path="/not-found" component={NotFound} />
+            <Route
+              path="/study/loading/:topic/:organization/:breadthValue/:depthValue"
+              component={Loading}
+            />
             <Route path="/study/" component={Study} />
 
             {this.state.isLoggedIn === "1" && (
