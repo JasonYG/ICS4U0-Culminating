@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const app = express();
 
-const Authentication = require("./back-end/Authentication");
+const Authentication = require("./back-end/authentication");
 
 app.use(bodyParser.json());
 
