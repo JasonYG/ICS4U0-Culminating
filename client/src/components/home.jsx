@@ -4,7 +4,6 @@ import SignIn from "./common/signIn";
 class Home extends Component {
   handleAuth = () => this.props.auth.login();
   render() {
-    const isLoggedIn = 0;
     return (
       <React.Fragment>
         <h1 className="title">Create a study guide today.</h1>

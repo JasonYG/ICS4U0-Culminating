@@ -52,7 +52,7 @@ class Study extends Component {
     const { studyGuides } = this.state;
     const isLoggedIn = localStorage.getItem("isLoggedIn");
     console.log("isLoggedIn ", isLoggedIn);
-    if (isLoggedIn == "0") return <Redirect to="/" />;
+    if (isLoggedIn === "0") return <Redirect to="/" />;
 
     return (
       <React.Fragment>
