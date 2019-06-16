@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import { throws } from "assert";
 
 class Study extends Component {
   state = {
@@ -74,7 +73,7 @@ class Study extends Component {
               type="text"
               placeholder="subject"
               value={this.state.topic}
-              className="input"
+              className="input topic-input"
               onChange={this.handleChange}
             />
           </div>
