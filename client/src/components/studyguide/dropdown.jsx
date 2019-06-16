@@ -10,7 +10,7 @@ class Dropdown extends Component {
     this.callApi();
   }
   callApi = async () => {
-    const getStudyGuides = await fetch("/api/login", {
+    const getStudyGuides = await fetch("/api/get-study-guides", {
       method: "POST",
       headers: {
         Accept: "application/json",
