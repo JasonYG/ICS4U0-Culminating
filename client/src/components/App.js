@@ -1,3 +1,4 @@
+import "font-awesome/css/font-awesome.css";
 import "../sass/App.scss";
 
 import React, { Component } from "react";
@@ -17,6 +18,7 @@ import Study from "./study";
 
 import Callback from "./redirect-pages/callback";
 import NotFound from "./redirect-pages/notFound";
+import Dropdown from "./studyguide/dropdown";
 
 const auth = new Auth();
 
@@ -39,40 +41,40 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <section className="hero is-fullheight">
-          <div className="background" />
-          <div className="hero-head">
-            <NavBar
-              subheadings={this.state.subheadings}
-              imagePath={this.state.imagePath}
-              appTitle={"Study4Life"}
-              logoComponent={this.state.logoComponent}
-            />
-          </div>
-          <div className="hero-body">
-            <div className="container has-text-centered">
-              <Switch>
-                <Route path="/about/" component={About} />
-                <Route path="/contact/" component={Contact} />
-                <Route path="/mission/" component={Mission} />
-                <Route path="/callback" component={Callback} />
-                <Route path="/not-found" component={NotFound} />
-                <Route path="/study/" component={Study} />
+        <div className="background" />
+        <div className="hero-head">
+          <NavBar
+            subheadings={this.state.subheadings}
+            imagePath={this.state.imagePath}
+            appTitle={"Study4Life"}
+            logoComponent={this.state.logoComponent}
+          />
+        </div>
+        <div className="columns">
+          <Route path="/study/" component={Dropdown} />
+          <div className="container has-text-centered column is-one-third">
+            <Switch>
+              <Route path="/about/" component={About} />
+              <Route path="/contact/" component={Contact} />
+              <Route path="/mission/" component={Mission} />
+              <Route path="/callback" component={Callback} />
+              <Route path="/not-found" component={NotFound} />
+              <Route path="/study/" component={Study} />
 
-                {this.state.isLoggedIn == "1" && (
-                  <Redirect from="/" to="/study/" />
-                )}
+              {this.state.isLoggedIn == "1" && (
+                <Redirect from="/" to="/study/" />
+              )}
 
-                <Route
-                  path="/"
-                  exact
-                  render={props => <Home auth={auth} {...props} />}
-                />
-                <Redirect to="/not-found" />
-              </Switch>
-            </div>
+              <Route
+                path="/"
+                exact
+                render={props => <Home auth={auth} {...props} />}
+              />
+              <Redirect to="/not-found" />
+            </Switch>
           </div>
-        </section>
+          <Route path="/study/" render={() => <div className="column" />} />
+        </div>
       </div>
     );
   }
