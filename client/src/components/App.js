@@ -2,6 +2,7 @@ import "font-awesome/css/font-awesome.css";
 import "../sass/App.scss";
 
 import React, { Component } from "react";
+import { Route } from "react-router-dom";
 
 import Logo from "./common/logo";
 import NavBar from "./common/navbar";
@@ -35,7 +36,7 @@ class App extends Component {
             logoComponent={this.state.logoComponent}
           />
         </div>
-        <MainContent />
+        <Route path="/" component={MainContent} />
       </div>
     );
   }
