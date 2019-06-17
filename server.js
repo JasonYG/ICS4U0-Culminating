@@ -22,11 +22,20 @@ app.post("/api/login", async (req, res) => {
 
   res.send(user);
 });
+app.post("/api/save-guide", async (req, res) => {
+  const { studyGuide, idToken } = req.body;
+  auth.email = idToken;
+  const response = auth.saveStudyGuide(studyGuide);
+  console.log("saved guide");
+  res.send({ response: response });
+});
 
 app.post("/api/get-study-guides", async (req, res) => {
   const { idToken } = req.body;
   auth.email = idToken;
-  res.send(auth.getStudyGuides());
+  const studyGuides = await auth.getStudyGuides();
+
+  res.send({ studyGuides });
 });
 
 app.post("/api/search-term", async (req, res) => {
