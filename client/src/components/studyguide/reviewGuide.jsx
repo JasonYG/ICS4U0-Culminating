@@ -4,7 +4,7 @@ import StudyGuide from "./studyGuide";
 
 class ReviewGuide extends Component {
   state = {
-    finishLoading: true,
+    finishLoading: false,
     studyGuide: {
       topic: "Animal",
       content: [
@@ -28,9 +28,10 @@ class ReviewGuide extends Component {
     }
   };
   componentDidMount() {
-    if (this.props.currentGuide != null) this.callApi();
+    if (this.props.currentGuide == null) this.callApi();
   }
   callApi = async () => {
+    console.log("here");
     const {
       breadthValue,
       depthValue,
@@ -51,7 +52,7 @@ class ReviewGuide extends Component {
       })
     });
     const body = await getGuide.json();
-
+    console.log(body);
     this.setState({ studyGuide: body, finishLoading: true });
   };
   handleDelete = () => {

@@ -14,7 +14,8 @@ class StudyGuide extends Component {
               {term}
             </h2>
             <p className="subtitle form-label">{info}</p>
-            {subtopics.map(topic => recursivelyObtainTopics(topic))}
+            {subtopics != null &&
+              subtopics.map(topic => recursivelyObtainTopics(topic))}
           </React.Fragment>
         );
       };
