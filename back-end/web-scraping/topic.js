@@ -37,11 +37,12 @@ class Topic {
 
     // Get HTML source from website
     const url = `https://en.wikipedia.org/wiki/${this._title}`;
+    console.log(url);
     const html = await rp(url, { timeout: 10000 });
     const $ = await cheerio.load(html);
 
     // Get raw HTML from paragraph elements
-    $("h2 .mw-headline").each(async (i, elem) => {
+    $("h2 .mw-headline").each((i, elem) => {
       const id = $(elem).attr("id");
       if (
         id === "See_also" ||
@@ -50,6 +51,7 @@ class Topic {
         id === "References"
       )
         return false;
+
       const term = $(elem)
         .attr("id")
         .replace(/_/g, " ");
@@ -62,8 +64,7 @@ class Topic {
 
       let summary = new Summarizer();
       summary.text = info;
-      console.log("h");
-      await summary.callApi();
+      summary.callApi();
       const summarizedInfo = summary.summary;
 
       this._topicInfo.push({
@@ -116,16 +117,18 @@ class Topic {
         );
         const newInfo = await newTopic
           .getInformation()
-          .then(() => console.log("got info"))
           .catch(err => console.error(err));
-        res(this._topicInfo[i].subtopics.push(newInfo));
+        this._topicInfo[i].subtopics.push(newInfo);
         // this._topicInfo[i]['subtopics'].push(Math.random() * 10);
       }
     }
-    console.log({
-      topic: this._title,
-      content: this._topicInfo
-    });
+    for (const section in this._topicInfo) {
+      let summary = new Summarizer();
+      summary.text = this._topicInfo[section].info;
+      await summary.callApi();
+      this._topicInfo[section].info = summary.summary;
+    }
+    console.log("topicInfo", this._topicInfo);
     return {
       topic: this._title,
       content: this._topicInfo
