@@ -4,7 +4,10 @@ import GuideLink from "../common/guideLink";
 class Dropdown extends Component {
   state = {
     showDropDown: false,
-    studyGuides: []
+    studyGuides: [],
+    searchedTerm: "",
+    displayedGuides: [],
+    ascendingSort: null
   };
   componentDidMount() {
     this.callApi();
@@ -30,7 +33,75 @@ class Dropdown extends Component {
     const showDropDown = !this.state.showDropDown;
     this.setState({ showDropDown });
   };
-
+  handleChange = e => {
+    const state = { ...this.state };
+    state.searchedTerm = e.currentTarget.value;
+    const filteredStudyGuides = this.state.studyGuides.filter(guide =>
+      guide.topic.toLowerCase().includes(state.searchedTerm)
+    );
+    this.setState({
+      searchedTerm: state.searchedTerm,
+      displayedGuides: filteredStudyGuides
+    });
+  };
+  handleSort = () => {
+    const state = { ...this.state };
+    const ascendingSort =
+      state.ascendingSort == null ? true : !state.ascendingSort;
+    this.setState({ ascendingSort });
+  };
+  renderDropdown = () => {
+    let studyGuides =
+      this.state.searchedTerm.length > 0
+        ? this.state.displayedGuides
+        : this.state.studyGuides;
+    if (this.state.ascendingSort != null) {
+      studyGuides = studyGuides.sort((guide1, guide2) =>
+        guide1.topic < guide2.topic ? 1 : -1
+      );
+      console.log(studyGuides);
+      // if (this.state.ascendingSort)
+      // sortedStudyGuides = sortedStudyGuides.reverse();
+    }
+    return (
+      <React.Fragment>
+        <div className="field is-horizontal">
+          <div className="field-body">
+            <p className="control has-icons-right">
+              <input
+                class="input"
+                value={this.state.searchedTerm}
+                onChange={this.handleChange}
+                onClick={this.handleSort}
+                type="text"
+                placeholder="Find a study guide"
+              />
+              <span className="icon is-small is-right">
+                <i
+                  className={
+                    "fa " +
+                    (!this.state.ascendingSort
+                      ? "fa-angle-down"
+                      : "fa-angle-up")
+                  }
+                />
+              </span>
+            </p>
+          </div>
+        </div>
+        <hr className="dropdown-divider" />
+        {studyGuides.map(guide => (
+          <GuideLink
+            key={guide.topic}
+            styling="dropdown-content container"
+            studyGuide={guide}
+            handleGuideSelect={this.props.handleGuideSelect}
+            name={guide.topic}
+          />
+        ))}
+      </React.Fragment>
+    );
+  };
   render() {
     const buttonClass =
       "button is-link is-inverted is-outlined " +
@@ -61,16 +132,7 @@ class Dropdown extends Component {
                   />
                 </span>
               </div>
-              {this.state.showDropDown &&
-                this.state.studyGuides.map(guide => (
-                  <GuideLink
-                    key={guide.topic}
-                    styling="dropdown-content container"
-                    studyGuide={guide}
-                    handleGuideSelect={this.props.handleGuideSelect}
-                    name={guide.topic}
-                  />
-                ))}
+              {this.state.showDropDown && this.renderDropdown()}
               <div className="column is-one-third" />
             </div>
           </div>
