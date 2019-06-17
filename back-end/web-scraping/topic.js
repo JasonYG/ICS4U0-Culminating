@@ -122,12 +122,12 @@ class Topic {
         // this._topicInfo[i]['subtopics'].push(Math.random() * 10);
       }
     }
-    for (const section in this._topicInfo) {
-      let summary = new Summarizer();
-      summary.text = this._topicInfo[section].info;
-      await summary.callApi();
-      this._topicInfo[section].info = summary.summary;
-    }
+    // for (const section in this._topicInfo) {
+    //   let summary = new Summarizer();
+    //   summary.text = this._topicInfo[section].info;
+    //   await summary.callApi();
+    //   this._topicInfo[section].info = summary.summary;
+    // }
     console.log("topicInfo", this._topicInfo);
     return {
       topic: this._title,
