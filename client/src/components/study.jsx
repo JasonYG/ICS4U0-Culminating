@@ -31,16 +31,14 @@ class Study extends Component {
 
     const body = await getStudyGuides.json();
     this.setState({ studyGuides: body.studyGuides ? body.studyGuides : [] });
-    console.log(body);
+
     this.setState({ hasLoggedIn: true });
   };
   handleBreadthChange = e => {
     this.setState({ breadthValue: e.target.value });
-    console.log(e.target.value);
   };
   handleDepthChange = e => {
     this.setState({ depthValue: e.target.value });
-    console.log(e.target.value);
   };
   handleTopicChange = e => {
     const state = { ...this.state };
@@ -49,7 +47,6 @@ class Study extends Component {
   };
   handleOrganizationChange = e => {
     this.setState({ organization: e.target.value });
-    console.log(e.target.value);
   };
   handleSubmit = async e => {
     e.preventDefault();
@@ -62,7 +59,7 @@ class Study extends Component {
   render() {
     const { studyGuides } = this.state;
     const isLoggedIn = localStorage.getItem("isLoggedIn");
-    console.log("isLoggedIn ", isLoggedIn);
+
     if (isLoggedIn === "0") return <Redirect to="/" />;
     if (this.state.redirect) {
       localStorage.setItem("creatingGuide", "true");
