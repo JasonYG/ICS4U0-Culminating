@@ -21,13 +21,37 @@ const auth = new Auth();
 class MainContent extends Component {
   state = {
     isLoggedIn: localStorage.getItem("isLoggedIn"),
-    creatingGuide: localStorage.getItem("creatingGuide") || false
+    creatingGuide: localStorage.getItem("creatingGuide") || false,
+    createdStudyGuide: false,
+    currentGuide: null
+  };
+  handleCreation = () => {
+    this.setState({ createdStudyGuide: true });
+  };
+  handleGuideSelect = guide => {
+    this.setState({ currentGuide: guide });
+    this.props.history.replace(`/study/review/${guide.topic}`);
   };
   render() {
+    this.state.createdStudyGuide = this.props.location.pathname.includes(
+      "/study/review/"
+    );
+
+    const columnStyling =
+      "container column  " +
+      (this.state.createdStudyGuide
+        ? "is-half"
+        : "main-column has-text-centered is-one-third");
     return (
       <div className="columns">
-        <Route exact path="/study/" component={Dropdown} />
-        <div className="container has-text-centered column is-one-third main-column">
+        <Route
+          exact
+          path="/study/"
+          render={props => (
+            <Dropdown {...props} handleGuideSelect={this.handleGuideSelect} />
+          )}
+        />
+        <div className={columnStyling}>
           <Switch>
             <Route path="/about/" component={About} />
             <Route path="/contact/" component={Contact} />
@@ -36,8 +60,21 @@ class MainContent extends Component {
             <Route path="/not-found" component={NotFound} />
             <Route
               path="/study/review/:topic/:organization/:breadthValue/:depthValue"
-              component={ReviewGuide}
+              render={props => (
+                <ReviewGuide onCreation={this.handleCreation} {...props} />
+              )}
             />
+            <Route
+              path="/study/review/:topic"
+              render={props => (
+                <ReviewGuide
+                  onCreation={this.handleCreation}
+                  {...props}
+                  currentGuide={this.state.currentGuide}
+                />
+              )}
+            />
+
             <Route path="/study/" component={Study} />
 
             {this.state.isLoggedIn === "1" && (
