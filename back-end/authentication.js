@@ -18,6 +18,8 @@ class Authentication {
 
   /**
    * Logs user into service or registers a new user
+   *
+   * @return {Promise} - a Promise that contains the result from the server
    */
   login() {
     const email = this.userEmail;
@@ -31,7 +33,6 @@ class Authentication {
         users.findOne({ email }, (err, user) => {
           if (err) reject(err);
           if (user) {
-            // users.updateOne(user, { $set: { studyGuides: [1, 2, 3, 4] } });
             resolve(user);
           } else {
             const newUser = { email: email, studyGuides: [] };
@@ -46,6 +47,8 @@ class Authentication {
   }
   /**
    * Gets the user's study guides
+   *
+   * @return {Promise} - a Promise that contains the study guide objects
    */
   getStudyGuides() {
     const email = this.userEmail;
@@ -69,6 +72,7 @@ class Authentication {
    * Saves the user's study guide in the database
    *
    * @param {object} studyGuide The study guide that will be saved
+   * @return {Promise} - a Promise that contains a response
    */
   saveStudyGuide(studyGuide) {
     const email = this.userEmail;

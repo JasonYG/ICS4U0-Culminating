@@ -41,44 +41,37 @@ class Topic {
     const $ = await cheerio.load(html);
 
     // Get raw HTML from paragraph elements
-    await Promise.all(
-      $("h2 .mw-headline").map(
-        async (i, elem) =>
-          new Promise(async (res, rej) => {
-            const id = $(elem).attr("id");
-            if (
-              id === "See_also" ||
-              id == "Notes" ||
-              id === "Further_reading" ||
-              id === "References"
-            )
-              res(false);
-
-            const term = $(elem)
-              .attr("id")
-              .replace(/_/g, " ");
-            const info = $(elem)
-              .parent()
-              .nextUntil("h2 .mw-headline", "p")
-              .text()
-              .trim()
-              .replace(referenceRegExp, "");
-
-            let summary = new Summarizer();
-            summary.text = info;
-            console.log("h");
-            await summary.callApi();
-            const summarizedInfo = summary.summary;
-
-            this._topicInfo.push({
-              term: term,
-              info: info,
-              subtopics: []
-            });
-            return res(true);
-          })
+    $("h2 .mw-headline").each(async (i, elem) => {
+      const id = $(elem).attr("id");
+      if (
+        id === "See_also" ||
+        id == "Notes" ||
+        id === "Further_reading" ||
+        id === "References"
       )
-    );
+        return false;
+      const term = $(elem)
+        .attr("id")
+        .replace(/_/g, " ");
+      const info = $(elem)
+        .parent()
+        .nextUntil("h2 .mw-headline", "p")
+        .text()
+        .trim()
+        .replace(referenceRegExp, "");
+
+      let summary = new Summarizer();
+      summary.text = info;
+      console.log("h");
+      await summary.callApi();
+      const summarizedInfo = summary.summary;
+
+      this._topicInfo.push({
+        term: term,
+        info: info,
+        subtopics: []
+      });
+    });
 
     $("p").each((i, elem) => {
       const foundSubtopics = $(elem)
@@ -129,7 +122,10 @@ class Topic {
         // this._topicInfo[i]['subtopics'].push(Math.random() * 10);
       }
     }
-    console.log("return");
+    console.log({
+      topic: this._title,
+      content: this._topicInfo
+    });
     return {
       topic: this._title,
       content: this._topicInfo
