@@ -21,7 +21,15 @@ class Callback extends Component {
           <Redirect to={`/study/`} />
         </React.Fragment>
       );
-    else return <h1>loading</h1>;
+    else
+      return (
+        <React.Fragment>
+          <h1 className="title">Loading...</h1>
+          <progress class="progress is-small is-primary" max="100">
+            15%
+          </progress>
+        </React.Fragment>
+      );
   }
 }
 
