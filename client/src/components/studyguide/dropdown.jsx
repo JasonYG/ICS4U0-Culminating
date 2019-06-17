@@ -25,12 +25,12 @@ class Dropdown extends Component {
     this.setState({
       studyGuides: body.studyGuides ? body.studyGuides : []
     });
-    console.log(body);
   };
   handleDropdown = () => {
     const showDropDown = !this.state.showDropDown;
     this.setState({ showDropDown });
   };
+
   render() {
     const buttonClass =
       "button is-link is-inverted is-outlined " +
@@ -44,7 +44,9 @@ class Dropdown extends Component {
                 className={buttonClass}
                 disabled={this.state.studyGuides.length === 0}
                 onClick={
-                  this.state.studyGuides.length > 0 ? this.handleDropdown : null
+                  this.state.studyGuides.length !== 0
+                    ? this.handleDropdown
+                    : null
                 }
               >
                 <span>Saved Study Guides</span>
@@ -62,10 +64,11 @@ class Dropdown extends Component {
               {this.state.showDropDown &&
                 this.state.studyGuides.map(guide => (
                   <GuideLink
-                    key={guide.name}
+                    key={guide.topic}
                     styling="dropdown-content container"
-                    handleGuideSelect={null}
-                    name={guide.name}
+                    studyGuide={guide}
+                    handleGuideSelect={this.props.handleGuideSelect}
+                    name={guide.topic}
                   />
                 ))}
               <div className="column is-one-third" />
