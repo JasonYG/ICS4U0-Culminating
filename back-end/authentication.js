@@ -58,8 +58,39 @@ class Authentication {
         const users = db.collection("users");
         users.findOne({ email }, (err, user) => {
           if (err) reject(err);
+          console.log("find study guides", user);
           if (user) resolve(user.studyGuides);
           else reject("User not found");
+        });
+      })
+    );
+  }
+  /**
+   * Saves the user's study guide in the database
+   *
+   * @param {object} studyGuide The study guide that will be saved
+   */
+  saveStudyGuide(studyGuide) {
+    const email = this.userEmail;
+    const MongoClient = require("mongodb").MongoClient;
+    const uri =
+      "mongodb+srv://studyguide:raaghavisgay@cluster0-pitl1.mongodb.net/test?retryWrites=true&w=majority";
+    return new Promise((resolve, reject) =>
+      MongoClient.connect(uri, { useNewUrlParser: true }, (err, client) => {
+        const db = client.db("studyguide");
+        const users = db.collection("users");
+        console.log(email);
+        users.findOne({ email }, (err, user) => {
+          if (err) reject(err);
+          if (user) {
+            const { studyGuides: oldStudyGuides } = user;
+            const studyGuides = [...oldStudyGuides, studyGuide];
+
+            users.updateOne(user, {
+              $set: { studyGuides }
+            });
+            resolve("Successfully saved study guide");
+          } else reject("User not found");
         });
       })
     );
