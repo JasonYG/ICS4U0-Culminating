@@ -42,7 +42,7 @@ class SummarizeText extends ParseText {
    * module, node-smmry. The link to their repository can be found here:
    * https://github.com/dantheuber/node-smmry.
    *
-   * @returns {object} - The SMMRY API's return JSON
+   * @return {object} - The SMMRY API's return JSON
    */
   async callApi() {
     return new Promise(async (resolve, reject) => {

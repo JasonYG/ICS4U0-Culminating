@@ -17,7 +17,7 @@ class ParseText {
   /**
    * Getter method that returns the text that is to be parsed
    *
-   * @returns {string} - The text that is to be parsed
+   * @return {string} - The text that is to be parsed
    */
   get text() {
     return this._text;
