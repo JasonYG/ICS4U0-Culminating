@@ -10,7 +10,7 @@ export default class Auth {
     clientID: "zfEeSMmnfCtMKzQhzHQPLmjB9GjicNBx",
     redirectUri:
       process.env.NODE_ENV === "production"
-        ? "http://ics4u-culminating.herokuapp.com/callback"
+        ? "http://localhost:3000/callback" /*"http://ics4u-culminating.herokuapp.com/callback"*/
         : "http://localhost:3000/callback",
     responseType: "token id_token",
     scope: "openid email"

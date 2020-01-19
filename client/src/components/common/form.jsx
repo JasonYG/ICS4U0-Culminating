@@ -58,7 +58,7 @@ class Form extends Component {
             className="slider is-fullwidth"
             step="3"
             min="0"
-            max="30"
+            max="3"
             value={this.props.breadthValue}
             onChange={this.props.handleBreadthChange}
             type="range"
@@ -70,7 +70,7 @@ class Form extends Component {
             className="slider is-fullwidth"
             step="1"
             min="0"
-            max="10"
+            max="3"
             value={this.props.depthValue}
             onChange={this.props.handleDepthChange}
             type="range"

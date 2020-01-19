@@ -10,7 +10,7 @@ const auth = new Authentication();
 
 app.use(bodyParser.json());
 
-app.get("/api/test", (req, res) => res.send({ Hello: "world" }));
+app.get("/api/test", (req, res) => res.send({ Hello: "wrld" }));
 
 app.use(express.static(path.join(__dirname, "client/build")));
 

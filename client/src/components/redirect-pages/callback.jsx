@@ -10,7 +10,7 @@ class Callback extends Component {
   }
 
   handleAuthentication = async (nextState, replace) => {
-    await auth.handleAuthentication();
+    await auth.handleAuthentication().catch(e => console.error(e));
     this.setState({ idToken: auth.getIdToken() });
   };
   render() {

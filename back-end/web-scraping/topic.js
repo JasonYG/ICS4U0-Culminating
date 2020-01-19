@@ -42,7 +42,7 @@ class Topic {
     const $ = await cheerio.load(html);
 
     // Get raw HTML from paragraph elements
-    $("h2 .mw-headline").each((i, elem) => {
+    $("h2 .mw-headline").each(async (i, elem) => {
       const id = $(elem).attr("id");
       if (
         id === "See_also" ||
@@ -64,12 +64,12 @@ class Topic {
 
       let summary = new Summarizer();
       summary.text = info;
-      summary.callApi();
+      await summary.callApi();
       const summarizedInfo = summary.summary;
 
       this._topicInfo.push({
         term: term,
-        info: info,
+        info: summarizedInfo,
         subtopics: []
       });
     });
@@ -129,14 +129,9 @@ class Topic {
     //   this._topicInfo[section].info = summary.summary;
     // }
     console.log("topicInfo", this._topicInfo);
-    return {
-      topic: this._title,
-      content: this._topicInfo
-    };
 
     // if (this._depth == 0) {
-    //   console.log("Exit condition");
-    //   return this._topicInfo;
+    //   return { topic: this._title, content: this._topicInfo };
     // } else {
     //   for (let i = 0; i < this._breadth; i++) {
     //     console.log("Recursioning");
@@ -147,10 +142,16 @@ class Topic {
     //     let newTopic = new Topic(this._subtopics[i][0], this._depth - 1);
     //     return {
     //       ...this._topicInfo,
-    //       "Subtopics": await newTopic.getInformation().catch(err => console.error(err))
+    //       Subtopics: await newTopic
+    //         .getInformation()
+    //         .catch(err => console.error(err))
     //     };
     //   }
     // }
+    return {
+      topic: this._title,
+      content: this._topicInfo
+    };
     console.log("Finished");
   }
 

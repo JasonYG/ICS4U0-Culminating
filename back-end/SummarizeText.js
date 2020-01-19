@@ -48,9 +48,9 @@ class SummarizeText extends ParseText {
     return new Promise(async (resolve, reject) => {
       //API request parameters
       const PARAMETERS = {
-        SM_API_KEY: "39F64FC805", //TODO: Remove API from source code
-        SM_URL:
-          "https://www.theguardian.com/world/2019/mar/07/north-korea-film-focuses-on-kim-jong-un-donald-trump-relationship-not-hanoi-summit-breakdown"
+        SM_API_KEY: "39F64FC805" //TODO: Remove API from source code
+        // SM_URL:
+        // "https://www.theguardian.com/world/2019/mar/07/north-korea-film-focuses-on-kim-jong-un-donald-trump-relationship-not-hanoi-summit-breakdown"
         // SM_LENGTH=N	 ,
         // SM_KEYWORD_COUNT=N,
         // SM_WITH_ENCODE: "",

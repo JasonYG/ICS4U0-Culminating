@@ -8,6 +8,7 @@ import Logo from "./common/logo";
 import NavBar from "./common/navbar";
 
 import MainContent from "./mainContent";
+import Study from "./study";
 
 class App extends Component {
   componentDidMount() {

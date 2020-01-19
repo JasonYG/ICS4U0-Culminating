@@ -4,34 +4,13 @@ import StudyGuide from "./studyGuide";
 
 class ReviewGuide extends Component {
   state = {
-    finishLoading: false,
-    studyGuide: {
-      topic: "Animal",
-      content: [
-        {
-          term: "Ethymology",
-          info: "Information about it",
-          subtopics: [
-            {
-              term: "1",
-              info: "Information about it",
-              subtopics: [
-                { term: "3", info: "Information about it", subtopics: [] },
-                { term: "4", info: "Information about it", subtopics: [] }
-              ]
-            },
-            { term: "2", info: "Information about it", subtopics: [] }
-          ]
-        },
-        { term: "Mammals", info: "Information about it", subtopics: [] }
-      ]
-    }
+    finishLoading: null,
+    currentGuide: null
   };
   componentDidMount() {
     if (this.props.currentGuide == null) this.callApi();
   }
   callApi = async () => {
-    console.log("here");
     const {
       breadthValue,
       depthValue,
